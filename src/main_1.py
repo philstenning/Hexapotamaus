@@ -4,46 +4,57 @@ import serial
 import lewansoul_lx16a
 import math
 
-
-# SERIAL_PORT = '/dev/ttyUSB0'
 SERIAL_PORT = 'COM4'
-
-
-#       |  side_c
-# side_v|_____
-#       side_h
-#
-
-#  the vertical axis mm
-side_vertical = 1
-
-# the horizontal axis mm
-side_horizontal = 180
-# side_c is the fist side we need to calculate.
-# using pythagoras
-# v2 * h2 = c2
-side_calculated = math.sqrt(side_vertical**2 + side_horizontal**2)
-print('side_calculated length: ', side_calculated)
-
-# We now need to work out the angles of the motor
-# We know the length of all sides of the triangle
-# by measuring the center rotational point of the motor
-# and to the tip of the foot of the leg.
-
-# motor 2 --> motor 3 distance between two
-# center pivot point
-SIDE_B = 70
-# motor 3 center pivot point --> tip of foot
-# any  bend in the leg is irrelevant
-# we just need the straight line length.
-SIDE_A = 200
-
 # Motor id's
 m_1 = 25
 m_2 = 26
 m_3 = 27
 
 leg_1 = [m_1, m_2, m_3]
+
+MOTOR_OFFSET = 100
+MOTOR_DEG = (749)/180  # 4.16111r
+
+# this is the maximum Positions of the
+# the leg can reach.
+# TODO: check this should be 235???
+GRAPH_MAX_Y = 230
+GRAPH_MAX_X = 230
+
+##### Foot postitions #####
+#  the vertical axis mm
+foot_position_y = 250
+
+# the horizontal axis mm
+foot_position_x = 200
+#########################
+
+######## leg triangle ########
+# this does not include the foot at the moment.
+leg_triangle_r = 156.62
+leg_triangle_s = 113.624
+leg_triangle_t = 193.494  # => math.sqrt(leg_triangle_r**2 + leg_triangle_s**2)
+
+print(leg_triangle_r, leg_triangle_s, leg_triangle_t)
+
+
+#### base triangle ####
+# this is needed to calculate unknown length of
+# the side in the position triangle / base_triangle_r
+base_triangle_s = foot_position_y-GRAPH_MAX_Y
+base_triangle_t = foot_position_x
+base_triangle_r = math.sqrt(base_triangle_s**2 + base_triangle_t**2)
+print(base_triangle_r, base_triangle_s, base_triangle_t)
+
+######  X Y position triangle ######
+
+# this is the hypotenuse from the leg triangle.
+position_triangle_r = leg_triangle_t
+# motor 2 --> motor 3 distance between two
+# center pivot points
+position_triangle_s = 70
+# calculated from base triangle.
+position_triangle_t = base_triangle_r
 
 
 def calc_angle_a(_side_a, _side_b, _side_c):
@@ -53,7 +64,7 @@ def calc_angle_a(_side_a, _side_b, _side_c):
     angle_A_radians = math.acos(
         (_side_b**2 + _side_c**2 - _side_a**2) / (2 * _side_b * _side_c))
     # convert to degrees and return
-    return math.degrees(angle_A_radians)
+    return int(round(math.degrees(angle_A_radians)))
 
 
 def calc_angle_c(_side_a, _side_b, _side_c):
@@ -65,20 +76,27 @@ def calc_angle_c(_side_a, _side_b, _side_c):
     # return math.degrees(angle_A_radians)
 
 
-angle_a = calc_angle_a(SIDE_A, SIDE_B,  side_calculated)
-angle_c = calc_angle_c(SIDE_A, SIDE_B, side_calculated)
-angle_b = 180 - (angle_a + angle_c)
-print('angle a ', angle_a)
-print('angle c ', angle_c)
-print('angle b ', angle_b)
+position_triangle_angle_A = calc_angle_a(
+    position_triangle_r, position_triangle_s,  position_triangle_t)
+
+position_triangle_angle_C = calc_angle_c(
+    position_triangle_r, position_triangle_s,  position_triangle_t)
+
+base_triangle_angle_C = calc_angle_c(
+    base_triangle_r, base_triangle_s,  base_triangle_t)
+
+print(position_triangle_angle_A, position_triangle_angle_C, base_triangle_angle_C)
 
 
-MOTOR_2_OFFSET = 100
-MOTOR_DEG = (749)/180  # 4.16111r
+motor_2_angle = 180 - (position_triangle_angle_A + base_triangle_angle_C)
+# 36 is the angle of the foot triangle.
+motor_3_angle = 360 - (position_triangle_angle_C + 36 + 90)
+
+print(motor_2_angle, motor_3_angle)
 
 
 def calPos(number):
-    return math.floor(MOTOR_DEG * number + MOTOR_2_OFFSET)
+    return math.floor(MOTOR_DEG * number + MOTOR_OFFSET)
 
 
 def set_motor_position(motor_id, angle=90, time_seconds=1):
@@ -101,16 +119,6 @@ def set_leg_position(let_id=leg_1, transition_time=1, motor_1_position=90,
     time.sleep(transition_time)
 
 
-# calculate angel with trig
-base_angel_b = math.degrees(math.atan(side_vertical/side_horizontal))
-
-# calculate angle c of base triangle
-base_angel_c = 180 - (base_angel_b + 90)
-print('base angel c', base_angel_c)
-
-# we have both angles calculate the remainder.
-motor_2_angle = 180 - (base_angel_c + angle_a)
-print('\nmotor_2_angle: ', motor_2_angle)
 
 #############################################################
 # Set up motor controller.
@@ -120,16 +128,7 @@ ctrl = lewansoul_lx16a.ServoController(
 
 ################################################################
 # set_leg_position(leg_1, 1, 90, 32, 131)
-# set_leg_position(leg_1, 1, 90, 52, 124)
-# set_leg_position(leg_1, 1, 90, 111, 97)
 
-# set_leg_position(leg_1, 1, 90, 95, 136)
-# set_leg_position(leg_1, 1, 90, 70, 123)
-while 1:
-    set_leg_position(leg_1, 1, 90, 0, 166)  # h:95 v: 137
-    # time.sleep(2)e
-    set_leg_position(leg_1, .5, 90, 168, 67)  # h:95 v: 137
-    set_leg_position(leg_1, 1, 90, 0, -20)  # h:95 v: 137
 
 
 print('motor positions --> m_2:', ctrl.get_position(m_2),
