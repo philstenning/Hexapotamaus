@@ -14,12 +14,11 @@ SERIAL_PORT = 'COM4'
 #       side_h
 #
 
-# side_v is the vertical axis
-side_vertical = 120
+#  the vertical axis
+side_vertical = 12
 
-
-# side_h is horizontal axis
-side_horizontal = 199
+# the horizontal axis
+side_horizontal = 180
 # side_c is the fist side we need to calculate.
 # using pythagoras
 # v2 * h2 = c2
@@ -36,15 +35,22 @@ print('side_calculated length: ', side_calculated)
 SIDE_B = 70
 # motor 3 center pivot point --> tip of foot
 # any  bend in the leg is irrelevant
-# we just need the streight line length.
+# we just need the straight line length.
 SIDE_A = 200
 
+# Motor id's
+m_1 = 25
+m_2 = 26
+m_3 = 27
 
+leg_1 = [m_1, m_2, m_3]
 # print(side_b**2)
 # print(side_c**2)
 # print(side_a**2)
 
 # cos A = (b2 + c2 - a2) / 2bc
+
+
 def calc_angle_a(_side_a, _side_b, _side_c):
    # use the math.acos function, this is the inverse cosine function
    # it returns radians
@@ -69,14 +75,36 @@ print('angle a ', angle_a)
 print('angle c ', angle_c)
 print('angle b ', angle_b)
 
-# motor has 240 degrees of rotation
-# this is divided by 1000 by it's diver.
-# 0 is top 1000 is bottom
-MOTOR_DEG = 1000/240  # 4.16666r
+#
+MOTOR_2_OFFSET = 100
+MOTOR_DEG = (749)/180  # 4.16111r
 
 # temp = math.floor(180 - (angle_a + calc_angle_c(side_calculated,
 #                                                 side_vertical, side_horizontal)))
 # print('temp\:', temp)
+
+
+def calPos(number):
+    return math.floor(MOTOR_DEG * number + MOTOR_2_OFFSET) 
+
+# quick set motor position
+# default angle is 90 degrees this should not bind on anything
+
+
+def set_motor_position(motor_id, angle=90, time_seconds=1):
+    position = calPos(angle)
+    transition_time = time_seconds * 1000
+    ctrl.move(motor_id, position, transition_time)
+
+
+def set_leg_position(let_id=leg_1, transition_time=1, motor_1_position=90,
+                     motor_2_position=90, motor_3_position=90):
+    # TODO next line disabled for testing only
+    # set_motor_position(let_id[0], motor_1_position, transition_time)
+    set_motor_position(let_id[1], motor_2_position, transition_time)
+    set_motor_position(let_id[2], motor_3_position, transition_time)
+    time.sleep(transition_time)
+
 
 # calculate angel with trig
 base_angel_b = math.degrees(math.atan(side_vertical/side_horizontal))
@@ -93,13 +121,14 @@ print('\nmotor_2_angle: ', motor_2_angle)
 motor_2_postition = math.floor(motor_2_angle * MOTOR_DEG)
 print('motor postition: ', motor_2_postition)
 
-MOTOR_3_OFFSET = -36
-motor_3_angle = 360 - angle_c + MOTOR_3_OFFSET - 90
+MOTOR_3_OFFSET = 36
+
+motor_3_angle = 180 - angle_c + MOTOR_3_OFFSET + 90
 print('motor_3_angle', motor_3_angle, ' deg')
 motor_3_postition = math.floor(motor_3_angle * MOTOR_DEG)
 
 # motor_3_postition = math.floor(angle_c * MOTOR_DEG)
-print('\nmotor offset_3: ', motor_3_postition)
+# print('\nmotor offset_3: ', motor_3_postition)
 ######################################################
 
 
@@ -108,21 +137,51 @@ ctrl = lewansoul_lx16a.ServoController(
 )
 # wait = 500
 # w = 30
-m_1 = 25
-m_2 = 26
-m_3 = 27
 
+
+# keep for setting limits
 min = 50
 max = 889
 # ctrl.set_position_limits(m_2, min, max)
 
-print('MOTOR 2 limits: ', ctrl.get_position_limits(m_2))
-
+# print('MOTOR 1 limits: ', ctrl.get_position_limits(m_1))
+# ctrl.set_position_offset(m_3,-18)
+# print('MOTOR 2 limits: ', ctrl.get_position_limits(m_2))
+# print('MOTOR 2 offset: ', ctrl.get_position_offset(m_3))
 # print('MOTOR 3 limits: ', ctrl.get_position_limits(m_3))
-ctrl.move(m_2, motor_2_postition, 2000)
-ctrl.move(m_3, motor_3_postition, 2000)
+# print('MOTOR 3 offset: ', ctrl.get_position_offset(m_3))
 
-time.sleep(2)
+
+# ctrl.move(m_2, calPos(90), 1000)
+
+# setPosition(m_3, 55, 1)
+set_leg_position(leg_1, 1, 90, motor_2_angle, motor_3_angle)
+# set_leg_position(leg_1, 2, 90, 0, 0)
+
+# ctrl.move(m_3, 500, 2000)
+
+# time.sleep(2)
+# ctrl.move(m_2, calPos(180), 2000)
+# time.sleep(2)
+# ctrl.move(m_2, calPos(0), 2000)
+# time.sleep(2)
+# ctrl.move(m_2, calPos(45), 2000)
+# ctrl.move(m_3, calPos(0), 1000)
+# time.sleep(1)
+# ctrl.move(m_3, calPos(180), 2000)
+# time.sleep(2)
+# ctrl.move(m_3, calPos(90), 2000)
+# time.sleep(2)
+# ctrl.move(m_3, calPos(180), 2000)
+# time.sleep(2)
+# ctrl.move(m_3, calPos(90), 2000)
+# time.sleep(2)
+# print('\n\n')
+# print(calPos(90))
+# print(calPos(0))
+# print(calPos(180))
+print('motor positions --> m_2:', ctrl.get_position(m_2),
+      ' m3: ', ctrl.get_position(m_3))
 # ctrl.move(m_3, max, 2000)
 # time.sleep(2)
 # ctrl.move(m_2,100 ,1000)
