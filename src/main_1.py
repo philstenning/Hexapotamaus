@@ -6,47 +6,57 @@ import math
 
 from legcalculations import calc_angle_a, calc_angle_c
 
+#angle B  |\
+#         | \
+#  side s |  \   side r
+#         |   \
+# angle A |____\ angle C
+#        side t
+
 SERIAL_PORT = 'COM4'
 # Motor id's
-m_1 = 25
-m_2 = 26
-m_3 = 27
+M_1 = 25
+M_2 = 26
+M_3 = 27
 
-m_4 = 38
-m_5 = 39
-m_6 = 40
+M_4 = 38
+M_5 = 39
+M_6 = 40
 
-leg_2 = [m_4, m_5, m_6]
+# ASSIGN MOTORS TO LEGS
+LEG_1 = [M_1, M_2, M_3]
+LEG_2 = [M_4, M_5, M_6]
 
-leg_1 = [m_1, m_2, m_3]
-
+# The motor arm in a straight line to body of motor
+# was set to a value of 500, so 0 degrees is not
+# at a value of 0 but around 100.  there will be
+# a small difference in how the motor was calibrated
+# so you will need to check each motor using the
+# ctrl.get_position_offset(motor_id)
 MOTOR_OFFSET = 100
 MOTOR_DEG = (749)/180  # 4.16111r
 
-# this is the maximum Positions of the
+# this is the maximum Positions that
 # the leg can reach.
 # TODO: check this should be 235???
 GRAPH_MAX_Y = 230
 GRAPH_MAX_X = 230
 
-##### Foot postitions #####
-#  the vertical axis mm
-# foot_position_y = 250
-
-# the horizontal axis mm
-# foot_position_x = 200
-#########################
-
 ######## leg triangle ########
 # this does not include the foot at the moment.
-leg_triangle_r = 156.62
-leg_triangle_s = 113.624
-leg_triangle_t = 193.494  # => math.sqrt(leg_triangle_r**2 + leg_triangle_s**2)
+LEG_TRIANGLE_R = 156.62
+LEG_TRIANGLE_S = 113.624
+LEG_TRIANGLE_T = 193.494  # => math.sqrt(leg_triangle_r**2 + leg_triangle_s**2)
 
-# print(leg_triangle_r, leg_triangle_s, leg_triangle_t)
+#### POSITION_TRIANGLE ####
+# only the side S is known at start
+# all others are calculated at runtime
+# motor 2 --> motor 3 distance between two
+# center pivot points
+POSITION_TRIANGLE_S = 70
 
 
-def calc_angles(foot_position_x, foot_position_y):
+def calc_angles(foot_position_x, foot_position_y, foot_position_z=0):
     foot_position_y += GRAPH_MAX_Y
     if foot_position_y == 0:
         foot_position_y = 1
@@ -61,31 +71,50 @@ def calc_angles(foot_position_x, foot_position_y):
     ######  X Y position triangle ######
 
     # this is the hypotenuse from the leg triangle.
-    position_triangle_r = leg_triangle_t
-    # motor 2 --> motor 3 distance between two
-    # center pivot points
-    position_triangle_s = 70
+    position_triangle_r = LEG_TRIANGLE_T
+
     # calculated from base triangle.
     position_triangle_t = base_triangle_r
 
     ####################################
     position_triangle_angle_A = calc_angle_a(
-        position_triangle_r, position_triangle_s,  position_triangle_t)
+        position_triangle_r, POSITION_TRIANGLE_S,  position_triangle_t)
 
     position_triangle_angle_C = calc_angle_c(
-        position_triangle_r, position_triangle_s,  position_triangle_t)
+        position_triangle_r, POSITION_TRIANGLE_S,  position_triangle_t)
 
     base_triangle_angle_C = calc_angle_c(
         base_triangle_r, base_triangle_s,  base_triangle_t)
-
     # print(position_triangle_angle_A, position_triangle_angle_C, base_triangle_angle_C)
-    motor_1_angle = 90
+
+    # calculate motor 1 angle
+    motor_1_triangle_s = math.sqrt(foot_position_x**2 + foot_position_z**2)
+    motor_1_angle = calculate_motor_1_angle(
+        foot_position_x, motor_1_triangle_s, foot_position_z)
+
     motor_2_angle = 180 - (position_triangle_angle_A + base_triangle_angle_C)
     # 36 is the angle of the foot triangle.
     motor_3_angle = 360 - (position_triangle_angle_C + 36 + 90)
 
     # print(motor_2_angle, motor_3_angle)
     return motor_1_angle,  motor_2_angle, motor_3_angle
+
+
+def calculate_motor_1_angle(triangle_side_r, triangle_side_s, triangle_side_t):
+    # default is 90 degrees
+    motor_1_angle = 90
+    if triangle_side_t > 0:
+        # print('---> foot_position_z:', foot_position_z)
+       
+        angle = calc_angle_a(
+            triangle_side_r, triangle_side_s, triangle_side_t)
+        motor_1_angle = 180 - angle
+    elif triangle_side_t < 0:
+        
+        motor_1_angle = calc_angle_a(
+            triangle_side_r, triangle_side_s, -triangle_side_t)
+        print('res motor_1_angle:', motor_1_angle)
+    return motor_1_angle
 
 
 def calPos(number):
@@ -101,14 +130,14 @@ def set_motor_position(motor_id, angle=90, time_seconds=1):
     ctrl.move(motor_id, position, transition_time)
 
 
-def set_leg_position_by_angles(leg_id=leg_1, transition_time=1, motor_1_position=90,
+def set_leg_position_by_angles(leg, transition_time=1, motor_1_position=90,
                                motor_2_position=90, motor_3_position=90):
     # shortcut for doing it with the set_motor_position function
     # but also add a time.sleep to make things cleaner.
     # TODO next line disabled for testing only
     # set_motor_position(let_id[0], motor_1_position, transition_time)
-    set_motor_position(leg_id[1], motor_2_position, transition_time)
-    set_motor_position(leg_id[2], motor_3_position, transition_time)
+    set_motor_position(leg[1], motor_2_position, transition_time)
+    set_motor_position(leg[2], motor_3_position, transition_time)
 
     time.sleep(transition_time)
 
@@ -121,9 +150,13 @@ def set_leg_position(leg, time_seconds, x, y, z=90):
 
 #############################################################
 # Set up motor controller.
-ctrl = lewansoul_lx16a.ServoController(
-    serial.Serial(SERIAL_PORT, 115200, timeout=1),
-)
+try:
+    ctrl = lewansoul_lx16a.ServoController(
+        serial.Serial(SERIAL_PORT, 115200, timeout=1),
+    )
+except:
+    print("Could not connect to motor controller")
+    # exit()
 
 
 def set_leg_move_prepare(leg, transition_time=1, x=90, y=90, z=90):
@@ -169,35 +202,35 @@ t = 0.01
 #     for i in range(end, start, -2):
 #         set_leg_position(leg_1, t, x, i)
 # print(ctrl.get_servo_id())
-while 1:
-    set_leg_move_prepare(leg_2, .5, 120, 120,90)
-    motors_move_start(.5)
-    set_leg_move_prepare(leg_1, .5, 120, 120,90)
-    motors_move_start(.5)
-    # set_leg_move_prepare(leg_2, 1, 120, 120,70)
-    # motors_move_start()
-    set_leg_move_prepare(leg_1, .5, 140, 10,120)
-    motors_move_start(.5)
-    # set_leg_move_prepare(leg_1, 1, 180, 10,180)
-    # motors_move_start()
-    set_leg_move_prepare(leg_1, .5, 140, 120,120)
-    motors_move_start(.5)
-    set_leg_move_prepare(leg_1, .2, 140, 120,120)
-    motors_move_start(.2)
+# while 1:
+#     set_leg_move_prepare(LEG_2, .5, 120, 120, 90)
+#     motors_move_start(.5)
+#     set_leg_move_prepare(LEG_1, .5, 120, 120, 90)
+#     motors_move_start(.5)
+#     # set_leg_move_prepare(leg_2, 1, 120, 120,70)
+#     # motors_move_start()
+#     set_leg_move_prepare(LEG_1, .5, 140, 10, 120)
+#     motors_move_start(.5)
+#     # set_leg_move_prepare(LEG_1, 1, 180, 10,180)
+#     # motors_move_start()
+#     set_leg_move_prepare(LEG_1, .5, 140, 120, 120)
+#     motors_move_start(.5)
+#     set_leg_move_prepare(LEG_1, .2, 140, 120, 120)
+#     motors_move_start(.2)
 
-    # motors_move_start()
-    # set_leg_move_prepare(leg_2, 1, 120, 120,70)
-    # motors_move_start()
-    set_leg_move_prepare(leg_2, .5, 140, 10,120)
-    motors_move_start(.5)
-    # set_leg_move_prepare(leg_1, 1, 180, 10,180)
-    # motors_move_start()
-    set_leg_move_prepare(leg_2, .5, 140, 120,120)
-    motors_move_start(.5)
-    set_leg_move_prepare(leg_2, .2, 140, 120,120)
-    motors_move_start(.2)
+#     # motors_move_start()
+#     # set_leg_move_prepare(leg_2, 1, 120, 120,70)
+#     # motors_move_start()
+#     set_leg_move_prepare(LEG_2, .5, 140, 10, 120)
+#     motors_move_start(.5)
+#     # set_leg_move_prepare(leg_1, 1, 180, 10,180)
+#     # motors_move_start()
+#     set_leg_move_prepare(LEG_2, .5, 140, 120, 120)
+#     motors_move_start(.5)
+#     set_leg_move_prepare(LEG_2, .2, 140, 120, 120)
+#     motors_move_start(.2)
 
-    # set_leg_move_prepare(leg_2, 1, 180, 10)
+# set_leg_move_prepare(leg_2, 1, 180, 10)
 # while 1:
 #     for i in range(100,200,10):
 #         m2, m3 = calc_angles(i, 130)
