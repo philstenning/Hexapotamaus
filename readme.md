@@ -9,3 +9,5 @@ https://www.youtube.com/watch?v=M71dl8aHCI0&list=PLQYW5Ukp-1D-amIge4qTAPyu934yNj
 [algebra  ](https://www.mathsisfun.com/algebra/trig-solving-sss-triangles.html)  
 
 [motor](https://www.hiwonder.hk/collections/servo/products/hiwonder-lx-16a-full-metal-gear-serial-bus-servo)
+
+[connector](https://www.molex.com/molex/products/family/minispox)
