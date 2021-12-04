@@ -1,5 +1,5 @@
-from legcalculations import calc_angle_a,calc_angle_c,calPos
-from main_1 import calculate_motor_1_angle, calc_angles
+from legcalculations import calc_angle_a, calc_angle_c, calPos, clamp_motor_3_positions, calculate_motor_1_angle, calc_angles
+# from main_1 import  
 import unittest
 
 
@@ -56,12 +56,33 @@ class Test_calc_angles(unittest.TestCase):
   
 class Test_calc_angles(unittest.TestCase):
 
-    def Test_calPos(self):
+    def test_calPos(self):
         self.assertEqual(calPos(20), 183)
         self.assertEqual(calPos(90), 474)
-        self.assertEqual(calPos(148), 716)
-        self.assertEqual(calPos(202), 941)
+        self.assertEqual(calPos(148), 715)
+        self.assertEqual(calPos(202), 940)
         
 
+class Test_clamp_clamp_motor_3_positions(unittest.TestCase):
+
+    def test_clamp_clamp_motor_3_positions_exceeds(self):
+        self.assertEqual(clamp_motor_3_positions(290), 261)
+        self.assertEqual(clamp_motor_3_positions(300), 261)
+
+    def test_clamp_clamp_motor_3_positions_less_than(self):
+        self.assertEqual(clamp_motor_3_positions(50), 148)
+        self.assertEqual(clamp_motor_3_positions(3), 148)
+
+    def test_clamp_clamp_motor_3_positions_in_range(self):
+        self.assertEqual(clamp_motor_3_positions(149), 149)
+        self.assertEqual(clamp_motor_3_positions(260), 260)
+        self.assertEqual(clamp_motor_3_positions(200), 200)
+
+
+        # self.assertEqual(clamp_motor_3_positions(463), 263)
+        # self.assertEqual(clamp_motor_3_positions(100), 148)
+        # self.assertEqual(clamp_motor_3_positions(190), 190)
+
+  
 if __name__ == '__main__':
     unittest.main()

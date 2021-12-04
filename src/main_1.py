@@ -138,7 +138,7 @@ def move():
     # set_leg_position(LEG_2, 1, 30, 180, 0)
     # set_leg_position(LEG_1, 1, 30, 180, 0)
     # set_leg_position(LEG_2, 1, 180, 150, 0)
-    set_leg_position(LEG_1, 1, 100, 50, 0)
+    set_leg_position(LEG_2, 1, 130, 100, 0)
     # while True:
     #     # set_leg_position_prepare(LEG_2, 1, 30, 120, 0)
     #     # set_leg_position_prepare(LEG_1, 1, 30, 120, 0)
