@@ -30,18 +30,44 @@ MAX_REACH_RADIUS = math.floor(
 MIN_REACH_RADIUS = 148
 
 
+def calculate_triangle_alpha(x, z):
+    """
+    Calculates the triangle alpha given the x, z position of the leg.
+    @ returns the triangle alpha in degrees
+    """
+    isNegative_z = False
+    if z == 0:
+        z = 0.0001
+
+    elif z < 0:
+        isNegative_z = True
+        z = abs(z)
+    # alpha_hypotenuse = clamp_leg_distance(math.sqrt(x**2 + z**2))
+    alpha_hypotenuse = math.sqrt(x**2 + z**2)
+    alpha_angle_A = int(math.degrees(math.atan2(x, z)))
+    # print('alpha_hypotenuse:', int(alpha_hypotenuse), 'x:', x, 'z:', z)
+    print('alpha_angle_A:', alpha_angle_A)
+
+    if isNegative_z:
+        return alpha_angle_A, alpha_hypotenuse
+    else:
+        return 180 - alpha_angle_A, alpha_hypotenuse
+
+    # # return safe values
+    # return 90, MIN_REACH_RADIUS
+
+
 def calculate_angles(x, y, z):
     """
     Calculates the angles of the legs given the
     x, y, z position of the leg.
-    @ returns a tuple of angles in degrees
+    @ returns a tuple of angles in degrees [motor_1_angle, motor_2_angle, motor_3_angle]
     """
 
     # calculate triangle alpha
-    alpha_hypotenuse = clamp_leg_distance(math.sqrt(x**2 + z**2))
-    alpha_angle_A = math.atan2(z, x)
-    motor_1_angle = math.degrees(alpha_angle_A)
-
+    # alpha_hypotenuse = clamp_leg_distance(math.sqrt(x**2 + z**2))
+    # alpha_angle_A = math.atan2(z, x)
+    motor_1_angle, alpha_hypotenuse = calculate_triangle_alpha(x, z)
     # calculate triangle beta
     beta_x = alpha_hypotenuse - MOTOR_ONE_TO_MOTOR_TWO_DISTANCE
     beta_hypotenuse = math.sqrt(beta_x**2 + y**2)
@@ -56,7 +82,7 @@ def calculate_angles(x, y, z):
         LEG_LENGTH, MOTOR_TWO_TO_MOTOR_THREE_DISTANCE, beta_hypotenuse)
     motor_3_angle = 360 - 90 + gamma_angle_C + LEG_OFFSET
 
-    return motor_1_angle, motor_2_angle, motor_3_angle
+    return int(motor_1_angle), int(motor_2_angle), int(motor_3_angle)
 
 
 def calc_angle_A(side_r, side_s, side_t):
@@ -100,4 +126,13 @@ def clamp_leg_distance(n):
     leg distance.
     """
     print('clamp_motor_3_positions:', n)
-    return max(min(MAX_REACH_RADIUS, n), MIN_REACH_RADIUS)
+    return int(max(min(MAX_REACH_RADIUS, n), MIN_REACH_RADIUS))
+
+
+def calc_motor_position(degrees):
+    """
+    Calculates the motor position given the calculated degrees
+    of the angle of the leg.
+    @ returns motor position as an int
+    """
+    return int(degrees*MOTOR_DEG) + MOTOR_OFFSET
