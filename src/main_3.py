@@ -1,12 +1,14 @@
 import time
 import serial
 import lewansoul_lx16a
-import json
-from inspect import currentframe, getframeinfo
+import logging
 
+from inspect import currentframe, getframeinfo
+from settings import load_settings
 from leg_calculations_2 import *
 
-
+logging.basicConfig(filename='debug.log',
+                    encoding='utf-8', level=logging.DEBUG)
 cf = currentframe()
 filename = getframeinfo(cf).filename
 
@@ -54,31 +56,29 @@ LEG_6 = [M_10, M_11, M_12]
 
 LEGS = [LEG_1, LEG_2, LEG_3, LEG_4, LEG_5, LEG_6]
 
-LEG_1_OFFSETS = [15, -12, -13]
-LEG_2_OFFSETS = [37, 7, 9]
-LEG_3_OFFSETS = [54, 20, -2]
-LEG_4_OFFSETS = [20, 46, 7]
-LEG_5_OFFSETS = [3, 4, -7]
-LEG_6_OFFSETS = [0, 1, 57]
 
 
-def load_settings():
-    with open('settings.json', 'r', encoding='utf-8') as settingsFile:
-        return json.load(settingsFile)
 
 
 leg_offsets = load_settings()['legOffsets']
 
+
 try:
+    lewansoul_lx16a.init()
     ctrl = lewansoul_lx16a.ServoController(
         serial.Serial(SERIAL_PORT, 115200, timeout=1),
     )
+    print('Connected to:', SERIAL_PORT)
+
 except:
     print("Could not connect to motor controller. at line:",
           cf.f_lineno)
-    # exit()
+# exit()
 
 
+# print(ctrl)
+
+#! moved
 def set_motor_position(motor_id, angle, time_seconds=1):
     """
     Set the position of a motor
@@ -93,7 +93,7 @@ def set_motor_position(motor_id, angle, time_seconds=1):
               filename, '@line:', cf.f_lineno)
         # exit()
 
-
+#! moved
 def set_leg_position_by_angles(leg, angles, time_seconds=1):
     """
     Set the position of a leg
@@ -105,7 +105,7 @@ def set_leg_position_by_angles(leg, angles, time_seconds=1):
         set_motor_position(leg[i], angles[i], time_seconds)
     time.sleep(time_seconds)
 
-
+#! moved
 def set_leg_position(leg, time_seconds, x, y, z):
     """
     Set the position of a leg
@@ -114,7 +114,7 @@ def set_leg_position(leg, time_seconds, x, y, z):
     print('angles', angles)
     set_leg_position_by_angles(leg, angles, time_seconds)
 
-
+#! moved
 def get_leg_position(leg):
     """
     Get the position of a leg
@@ -125,13 +125,13 @@ def get_leg_position(leg):
     print('current angles for leg:', angles)
     return angles
 
-
+#! moved
 def get_motor_settings(motor_id):
     offset = ctrl.get_position_offset(motor_id)
     position = ctrl.get_position(motor_id)
     print('motor_id:', motor_id, 'offset:', offset, 'position:', position)
 
-
+#! moved
 def reset_motor_offset(motor):
     print(ctrl.get_position(motor))
     print(ctrl.get_position_offset(motor))
@@ -173,20 +173,6 @@ def adjust_leg_offsets(leg, motor_1_dif, motor_2_dif, motor_3_dif):
     m3 = ctrl.get_position_offset(leg[2])
     print('after --> motor 1:', m1, ' motor 2:', m2, ' motor 3:', m3)
 
-
-def save_settings():
-    with open('settings.json', 'w', encoding='utf-8') as settingsFile:
-        json.dump({'legOffsets': leg_offsets},
-                  settingsFile, ensure_ascii=False)
-
-
-# def set_settings():
-#     leg_offsets[]
-
-
-# load_settings()
-# get_leg_settings()
-# print( 'settings --> leg_offsets',leg_offsets)
 
 def set_all_leg_offsets(leg_offsets=leg_offsets):
     for leg in range(6):
@@ -234,15 +220,16 @@ def start_movement():
               cf.f_lineno, filename)
 
 
-def main():
+# def main():
 
-    start_movement()
+#     start_movement()
 
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     pass
+    # main()
 
-print('Done...')
+# print('Done...')
 
 
 # get_leg_position(LEG_1)
