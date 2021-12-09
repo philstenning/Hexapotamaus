@@ -18,7 +18,7 @@ LEG_LENGTH = 193.494  # => math.sqrt(leg_triangle_r**2 + leg_triangle_s**2)
 LEG_OFFSET = 36
 
 # distant from main spindle of each motor.
-MOTOR_ONE_TO_MOTOR_TWO_DISTANCE = 60
+MOTOR_ONE_TO_MOTOR_TWO_DISTANCE = 50
 MOTOR_TWO_TO_MOTOR_THREE_DISTANCE = 68
 
 #  this is the maximum Positions that the leg can reach.
@@ -27,26 +27,25 @@ MAX_REACH_RADIUS = math.floor(
     MOTOR_TWO_TO_MOTOR_THREE_DISTANCE + LEG_LENGTH - 2)  # 261
 # Any less than this is not possible, as the leg section
 # will coliide with the the other leg section.
-MIN_REACH_RADIUS = 148
+MIN_REACH_RADIUS = 130
 
 
 def calculate_triangle_alpha(x, z):
     """
     Calculates the triangle alpha given the x, z position of the leg.
-    @ returns the triangle alpha in degrees
+    @ returns a tuple of [the motor angle , the hypotenuse of the triangle]
     """
     isNegative_z = False
-    if z == 0:
-        z = 0.0001
+    
 
-    elif z < 0:
+    if z < 0:
         isNegative_z = True
         z = abs(z)
-    # alpha_hypotenuse = clamp_leg_distance(math.sqrt(x**2 + z**2))
+    
     alpha_hypotenuse = math.sqrt(x**2 + z**2)
     alpha_angle_A = int(math.degrees(math.atan2(x, z)))
     # print('alpha_hypotenuse:', int(alpha_hypotenuse), 'x:', x, 'z:', z)
-    print('alpha_angle_A:', alpha_angle_A)
+    # print('alpha_angle_A:', alpha_angle_A)
 
     if isNegative_z:
         return alpha_angle_A, alpha_hypotenuse
@@ -65,24 +64,40 @@ def calculate_angles(x, y, z):
     """
 
     # calculate triangle alpha
-    # alpha_hypotenuse = clamp_leg_distance(math.sqrt(x**2 + z**2))
-    # alpha_angle_A = math.atan2(z, x)
     motor_1_angle, alpha_hypotenuse = calculate_triangle_alpha(x, z)
-    # calculate triangle beta
-    beta_x = alpha_hypotenuse - MOTOR_ONE_TO_MOTOR_TWO_DISTANCE
-    beta_hypotenuse = math.sqrt(beta_x**2 + y**2)
-    beta_angle_A = math.atan2(y, beta_x)
-    # beta_angle_B = 180 - math.degrees(beta_angle_A) - 90
+    beta_hypotenuse, beta_angle_C = calculate_triangle_beta(y, alpha_hypotenuse)
 
     # calculate triangle gamma
     gamma_angle_A = calc_angle_A(
         LEG_LENGTH, MOTOR_TWO_TO_MOTOR_THREE_DISTANCE, beta_hypotenuse)
-    motor_2_angle = 180 - gamma_angle_A - beta_angle_A
+    # print('gamma_angle_A:', gamma_angle_A)    
+    #
+    motor_2_angle = 180 - (gamma_angle_A + beta_angle_C)
+    # print('motor_2_angle:', motor_2_angle)
+   
     gamma_angle_C = calc_angle_C(
         LEG_LENGTH, MOTOR_TWO_TO_MOTOR_THREE_DISTANCE, beta_hypotenuse)
-    motor_3_angle = 360 - 90 + gamma_angle_C + LEG_OFFSET
+    # print('gamma_angle_C:', gamma_angle_C)
+    # (90 deg + 36 offset) 126 
+    # 360 - 126 = 234
+    motor_3_angle = 234 - gamma_angle_C 
+
 
     return int(motor_1_angle), int(motor_2_angle), int(motor_3_angle)
+    # return int(motor_1_angle), int(motor_2_angle), int(motor_3_angle)
+
+def calculate_triangle_beta(y, alpha_hypotenuse):
+    """
+    Calculates the triangle beta given the y, alpha_hypotenuse
+    """
+    #! TODO: add clamping to the hypotenuse
+    # print('calculate_triangle_beta:', y, alpha_hypotenuse)
+    beta_x = alpha_hypotenuse - MOTOR_ONE_TO_MOTOR_TWO_DISTANCE
+    beta_hypotenuse = math.sqrt(beta_x**2 + y**2)
+    beta_angle_C=math.degrees(math.atan2( beta_x, y)) 
+    
+    # print('beta_hypotenuse:', beta_hypotenuse, 'beta_angle_c:', beta_angle_C)
+    return beta_hypotenuse,beta_angle_C
 
 
 def calc_angle_A(side_r, side_s, side_t):

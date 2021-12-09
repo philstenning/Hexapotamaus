@@ -3,16 +3,12 @@ from leg_calculations_2 import *
 import unittest
 
 
-# class Test_Test_calculate_motor_1_angle(unittest.TestCase):
-#     def test_calculate_motor_1_angle(self):
-#         self.assertEqual(calculate_motor_1_angle(180,234,150), 130)
-#         self.assertEqual(calculate_motor_1_angle(180,206,100), 119)
-#         # self.assertEqual(calculate_motor_1_angle(170, 100), 120)
-
-#     def test_less_than_zero(self):
-#         self.assertEqual(calculate_motor_1_angle(180,206,-100), 61)
-#         self.assertEqual(calculate_motor_1_angle(170, 170,0), 90)
-#         self.assertEqual(calculate_motor_1_angle(170,197, -100), 60)
+class TestLegCalculations(unittest.TestCase):
+    #! TODO: add tests for out of range values
+    def test_calculate_angles(self):
+        self.assertAlmostEqual(calculate_angles(220, 100, 23)[0], 95,  delta=2)
+        self.assertAlmostEqual(calculate_angles(220, 100, 23)[1], 44,  delta=2)
+        self.assertAlmostEqual(calculate_angles(220, 100, 23)[2], 150,  delta=2)
 
 
 class Test_calc_angle_a(unittest.TestCase):
@@ -38,33 +34,15 @@ class Test_calculate_triangle_alpha(unittest.TestCase):
         self.assertEqual(calculate_triangle_alpha(100, 100)[0],135)
         self.assertEqual(calculate_triangle_alpha(100, -100)[0],45)
         self.assertEqual(calculate_triangle_alpha(100, 0)[0],90)
-        # self.assertEqual(calculate_triangle_alpha(100, 100, 200), 60)
-        # self.assertEqual(calculate_triangle_alpha(100, 200, 100), 45)
-        # self.assertEqual(calculate_triangle_alpha(200, 100, 100), 135)
-# class Test_calculate_angles(unittest.TestCase):
-#     def test_calc_angles(self):
-#         self.assertAlmostEqual(calculate_angles(220, 50, 1)[0], 90, delta=2)
-#         self.assertAlmostEqual(calculate_angles(220, 50, 1)[1], 13, delta=2)
-#         self.assertAlmostEqual(calculate_angles(220, 50, 1)[2], 168, delta=2)
-    #     self.assertAlmostEqual(calc_angles(180, 120, 150)[1], 113,delta=2)
-    #     self.assertAlmostEqual(calc_angles(180, 120, 150)[2], 60,delta=2)
-    #     self.assertAlmostEqual(calc_angles(180, 120, 140)[0], 128,delta=2)
-    #     self.assertAlmostEqual(calc_angles(180, 120, 140)[1], 98,delta=2)
-    #     self.assertAlmostEqual(calc_angles(180, 120, 140)[2], 81,delta=2)
+        self.assertEqual(calculate_triangle_alpha(200, 23)[0],97)
+    
+    def test_the_return_hypotenuse(self):
+        self.assertEqual(int(calculate_triangle_alpha(100, 100)[1]),int(141.42))
+        self.assertEqual(int(calculate_triangle_alpha(100, -100)[1]), int(141.42))
+        self.assertEqual(int(calculate_triangle_alpha(100, 0)[1]), int(100))
+        self.assertEqual(int(calculate_triangle_alpha(200, 23)[1]), int(201.32))
 
-    # def test_calc_angles_motor_1_negative_values(self):
-    #     self.assertAlmostEqual(calc_angles(180, 120, -140)[0], 52,delta=2)
-    #     self.assertAlmostEqual(calc_angles(180, 120, -140)[1], 98,delta=2)
-    #     self.assertAlmostEqual(calc_angles(180, 120, -140)[2], 81,delta=2)
-    #     #
-    #     self.assertAlmostEqual(calc_angles(180, 120, -1)[0], 90,delta=2)
-    #     self.assertAlmostEqual(calc_angles(180, 120, -1)[1], 62,delta=2)
-    #     self.assertAlmostEqual(calc_angles(180, 120, -1)[2], 135,delta=2)
-
-    # self.assertAlmostEqual(calc_angles(180, 120, 150)[0], 130,delta=2)
-    # self.assertAlmostEqual(calc_angles(180, 120, 150)[1], 113,delta=2)
-    # self.assertAlmostEqual(calc_angles(180, 120, 150)[2], 60,delta=2)
-
+      
 
 class Test_calc_angles(unittest.TestCase):
 
@@ -81,8 +59,9 @@ class Test_clamp_clamp_motor_3_positions(unittest.TestCase):
     def test_clamp_clamp_motor_3_positions_exceeds(self):
         self.assertEqual(clamp_leg_distance(290), 259)
         self.assertEqual(clamp_leg_distance(200), 200)
-        self.assertEqual(clamp_leg_distance(1), 148)
-        self.assertEqual(clamp_leg_distance(147), 148)
+        self.assertEqual(clamp_leg_distance(1), MIN_REACH_RADIUS) # 130
+        self.assertEqual(clamp_leg_distance(
+            MIN_REACH_RADIUS-1), MIN_REACH_RADIUS)
         self.assertEqual(clamp_leg_distance(14725), 259)
 
 
