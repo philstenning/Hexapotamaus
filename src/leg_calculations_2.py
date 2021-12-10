@@ -1,5 +1,12 @@
 import math
 
+# angle B |\
+#         | \
+#  side s |  \   side r
+#         |   \
+# angle A |____\ angle C
+#        side t
+
 
 # The motor arm in a straight line to body of motor
 # was set to a value of 500, so 0 degrees is not
@@ -36,12 +43,11 @@ def calculate_triangle_alpha(x, z):
     @ returns a tuple of [the motor angle , the hypotenuse of the triangle]
     """
     isNegative_z = False
-    
 
     if z < 0:
         isNegative_z = True
         z = abs(z)
-    
+
     alpha_hypotenuse = math.sqrt(x**2 + z**2)
     alpha_angle_A = int(math.degrees(math.atan2(x, z)))
     # print('alpha_hypotenuse:', int(alpha_hypotenuse), 'x:', x, 'z:', z)
@@ -65,26 +71,27 @@ def calculate_angles(x, y, z):
 
     # calculate triangle alpha
     motor_1_angle, alpha_hypotenuse = calculate_triangle_alpha(x, z)
-    beta_hypotenuse, beta_angle_C = calculate_triangle_beta(y, alpha_hypotenuse)
+    beta_hypotenuse, beta_angle_C = calculate_triangle_beta(
+        y, alpha_hypotenuse)
 
     # calculate triangle gamma
     gamma_angle_A = calc_angle_A(
         LEG_LENGTH, MOTOR_TWO_TO_MOTOR_THREE_DISTANCE, beta_hypotenuse)
-    # print('gamma_angle_A:', gamma_angle_A)    
+    # print('gamma_angle_A:', gamma_angle_A)
     #
     motor_2_angle = 180 - (gamma_angle_A + beta_angle_C)
     # print('motor_2_angle:', motor_2_angle)
-   
+
     gamma_angle_C = calc_angle_C(
         LEG_LENGTH, MOTOR_TWO_TO_MOTOR_THREE_DISTANCE, beta_hypotenuse)
     # print('gamma_angle_C:', gamma_angle_C)
-    # (90 deg + 36 offset) 126 
+    # (90 deg + 36 offset) 126
     # 360 - 126 = 234
-    motor_3_angle = 234 - gamma_angle_C 
-
+    motor_3_angle = 234 - gamma_angle_C
 
     return int(motor_1_angle), int(motor_2_angle), int(motor_3_angle)
     # return int(motor_1_angle), int(motor_2_angle), int(motor_3_angle)
+
 
 def calculate_triangle_beta(y, alpha_hypotenuse):
     """
@@ -94,17 +101,17 @@ def calculate_triangle_beta(y, alpha_hypotenuse):
     # print('calculate_triangle_beta:', y, alpha_hypotenuse)
     beta_x = alpha_hypotenuse - MOTOR_ONE_TO_MOTOR_TWO_DISTANCE
     beta_hypotenuse = math.sqrt(beta_x**2 + y**2)
-    beta_angle_C=math.degrees(math.atan2( beta_x, y)) 
-    
+    beta_angle_C = math.degrees(math.atan2(beta_x, y))
+
     # print('beta_hypotenuse:', beta_hypotenuse, 'beta_angle_c:', beta_angle_C)
-    return beta_hypotenuse,beta_angle_C
+    return beta_hypotenuse, beta_angle_C
 
 
 def calc_angle_A(side_r, side_s, side_t):
     """
     Calculate the angle A of the triangle
-    see ref for details in main_1.py
-    @ returns angle A in degrees
+    see ref @ top of file for details
+    @returns angle A in degrees
     """
 
     # cos A = (b2 + c2 - a2) / 2bc
@@ -117,7 +124,8 @@ def calc_angle_A(side_r, side_s, side_t):
         angle_A_radians = math.acos(val)
         return int(round(math.degrees(angle_A_radians)))
     except:
-        # if the value is out of bounds, return -1
+        # if the value is out of bounds, return 90 degrees
+        # this should stop the robot from braking itself.
         if -1.0 > val > 1.0:
             print("Error: out of range -1 to 1 value was:", val)
         else:
