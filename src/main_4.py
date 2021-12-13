@@ -6,11 +6,87 @@ a2 = 0
 a3 = 950
 
 
+def print_all_legs_positions():
+    print(leg_1.get_motor_positions())
+    print(leg_2.get_motor_positions())
+    print(leg_3.get_motor_positions())
+    print(leg_4.get_motor_positions())
+    print(leg_5.get_motor_positions())
+    print(leg_6.get_motor_positions())
+
+
+def set_all_legs_positions_by_angles(a1, a2, a3):
+    leg_1.set_position_by_angles([a1, a2, a3])
+    leg_2.set_position_by_angles([a1, a2, a3])
+    leg_3.set_position_by_angles([a1, a2, a3])
+    leg_4.set_position_by_angles([a1, a2, a3])
+    leg_5.set_position_by_angles([a1, a2, a3])
+    leg_6.set_position_by_angles([a1, a2, a3])
+
+
+# def set_all_legs_rib_cage():
+#     leg_1.set_position_by_angles([474, 637, 818])
+#     leg_2.set_position_by_angles([475, 621, 812])
+#     leg_3.set_position_by_angles([468, 656, 774])
+#     leg_4.set_position_by_angles([517, 639, 801])
+#     leg_5.set_position_by_angles([500, 641, 807])
+#     leg_6.set_position_by_angles([493, 712, 728])
+
+
+def set_all_legs_position(x, y, z, time=1):
+    leg_1.set_position(x, y, z, time)
+    leg_2.set_position(x, y, z, time)
+    leg_3.set_position(x, y, z, time)
+    leg_4.set_position(x, y, z, time)
+    leg_5.set_position(x, y, z, time)
+    leg_6.set_position(x, y, z, time)
+
+
+def set_all_legs_walk_start():
+    leg_1.set_position(180, 150, 0)
+    leg_2.set_position(180, 50, 0)
+    leg_3.set_position(180, 150, 0)
+    leg_4.set_position(180, 50, 0)
+    leg_5.set_position(180, 150, 0)
+    leg_6.set_position(180, 50, 0)
+
+
+
 
 def main():
-    px = 90
-    py = 0
+    px = 220
+    py = 60
+    py2 = 150
     pz = 0
+    
+    while True:
+     
+        leg_1.set_position(px, py, pz)
+        leg_3.set_position(px, py, pz)
+        leg_6.set_position(px, py, pz)
+    
+        leg_2.set_position(px, py2, pz)
+        leg_4.set_position(px, py2, pz)
+        leg_5.set_position(px, py2, pz)
+        time.sleep(1)
+        leg_1.set_position(px, py2, pz)
+        leg_3.set_position(px, py2, pz)
+        leg_6.set_position(px, py2, pz)
+    
+        leg_2.set_position(px, py, pz)
+        leg_4.set_position(px, py, pz)
+        leg_5.set_position(px, py, pz)
+        time.sleep(1)
+    # set_all_legs_walk_start()
+    # # set_all_legs_walk_start()
+    # time.sleep(1)
+    # set_all_legs_position(150, 220, 0)
+
+    # set_all_legs_walk_start()
+    # set_all_legs_walk_start()
+    # time.sleep(1)
+    # set_all_legs_rib_cage()
+
     # leg_1.set_position_by_angles([a1, a2, a3])
     # leg_2.set_position_by_angles([90,a2,a3])
     # leg_3.set_position_by_angles([90,a2,a3])
@@ -44,11 +120,7 @@ def main():
     #     time.sleep(1)
 
     #     py=220
-
     # leg_6.print_motor_settings()
     # leg_2.print_motor_settings()
-
-
 if __name__ == '__main__':
     main()
-  
