@@ -2,6 +2,7 @@
 
 A pink six-legged robot, built using inverse kinematics in python.
 
+![main image](images/PXL_20211211_112616037.jpg)
 ## Bus servo
 The servos used in this robot:
 
