@@ -1,0 +1,11 @@
+{
+  "name": "debug-server",
+  "version": "0.0.1",
+  "description": "Debgug server for Hexipotamaus",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "philstenning@hotmail.com",
+  "license": "ISC"
+}
