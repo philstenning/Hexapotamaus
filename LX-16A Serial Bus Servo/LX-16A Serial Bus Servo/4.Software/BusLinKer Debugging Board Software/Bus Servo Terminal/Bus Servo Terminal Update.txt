@@ -1,0 +1,5 @@
+The bus servo Terminal V1.7£º
+
+1. Modify the interface color and LOGO
+2. Add high voltage servo 14V 
+3. The software support multi-language switching

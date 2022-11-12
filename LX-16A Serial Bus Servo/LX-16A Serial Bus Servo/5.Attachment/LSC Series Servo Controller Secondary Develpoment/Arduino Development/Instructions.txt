@@ -1,0 +1,21 @@
+Tested successfully in the Arduino development environment of version 1.6.0 or higher, other versions are not tested
+Open the arduino development environment and find the project in the menu - "Load Library -" to load a .zip library, then select LobotServoController.zip in this directory. 
+Wait a moment, the Arduino development environment prompt library has been added, and then restart the Arduino development environment. 
+Find the file in the Arduino development environment - "Example -" LobotServoController - "LobotServoController", click Open, this will open a secondary development example, try to compile the example, you should be able to compile successfully. Refer to the example for secondary development.
+This library uses the Serial class for serial communication and occupies one hardware serial port of Arduino.
+
+Wiring: Tx of the servo control board is connected to the Rx of the Arduino, Rx of the servo control board is connected to the Tx of the Arduino, and the GND of the steering control board is connected to the GND of the Arduino
+
+Please initialize the serial port to use the baud rate before using the library. 9600 does not support other baud rates.
+Called after instantiating the LobotServoController class
+
+Call example:
+??LobotServoController Controller (Serial3); //Use Serial3 as the communication interface with the servo board.
+????????????????????????????????????????????/ / No parameters are for Serial
+??Controller.moveServo(0,1200,1000); //0 servo 10ms moved to 1200 position
+??
+For Arduino Leonardo and other atmega32u4 boards, the default serial port is Serial1, others are Serial.
+More functions see code, code has detailed comments
+
+After sending the battery voltage command, the user needs to run the receiveHandle to retrieve the voltage information from the serial port data.
+After obtaining the battery voltage, the battery voltage is saved in the class member batteryVoltage, and the user needs to read the variable in millivolts.
