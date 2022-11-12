@@ -17,7 +17,7 @@ filename = getframeinfo(cf).filename
 # angle A |____\ angle C
 #        side t
 
-SERIAL_PORT = 'COM4'
+SERIAL_PORT = 'COM3'
 # Motor id's
 M_1 = 25
 M_2 = 26
@@ -139,7 +139,10 @@ def move():
     # set_leg_position(LEG_1, 1, 30, 180, 0)
     # set_leg_position(LEG_2, 1, 180, 150, 0)
     # set_leg_position(LEG_1, 1, 50, 220, 0)
-    set_leg_position(LEG_2, 1, 60, 100, -30)
+    # set_leg_position(LEG_1, 1, 20, 90, 90)
+    set_leg_position(LEG_2, 1, 90, 90, 90)
+    # set_leg_position(LEG_2, 1, 60, 100, -30)
+    # set_leg_position(LEG_, 1, 60, 100, -30)
     # while True:
     #     # set_leg_position_prepare(LEG_2, 1, 30, 120, 0)
     #     # set_leg_position_prepare(LEG_1, 1, 30, 120, 0)

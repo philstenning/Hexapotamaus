@@ -51,32 +51,52 @@ def set_all_legs_walk_start():
     leg_6.set_position(180, 50, 0)
 
 
-
-
 def main():
-    px = 220
-    py = 60
+    px = 20
+    py = 100
     py2 = 150
     pz = 0
-    
+
     while True:
-     
-        leg_1.set_position(px, py, pz)
-        leg_3.set_position(px, py, pz)
-        leg_6.set_position(px, py, pz)
-    
-        leg_2.set_position(px, py2, pz)
-        leg_4.set_position(px, py2, pz)
-        leg_5.set_position(px, py2, pz)
+
+        # leg_1.get_motor_positions()
+        leg_1.set_position(180, 100, -10, 0.5)
+        leg_2.set_position(180, 100, -10, 0.5)
+        leg_5.set_position(180, 100, -10, 0.5)
+        leg_6.set_position(180, 100, -10, 0.5)
+        leg_4.set_position(180, 100, -10, 0.5)
+        leg_3.set_position(180, 100, -10, 0.5)
         time.sleep(1)
-        leg_1.set_position(px, py2, pz)
-        leg_3.set_position(px, py2, pz)
-        leg_6.set_position(px, py2, pz)
-    
-        leg_2.set_position(px, py, pz)
-        leg_4.set_position(px, py, pz)
-        leg_5.set_position(px, py, pz)
+        leg_1.set_position(180, 160, 30, 0.5)
+        leg_2.set_position(180, 160, 30, 0.5)
+        leg_3.set_position(180, 160, 30, 0.5)
+        leg_4.set_position(180, 160, 30, 0.5)
+        leg_5.set_position(180, 160, 30, 0.5)
+        leg_6.set_position(180, 160, 30, 0.5)
+        # time.sleep(2)
+        # time.sleep(2)
         time.sleep(1)
+        set_all_legs_walk_start()
+        time.sleep(1)
+        # leg_5.set_position(120, 30, 20,2)
+        # time.sleep(2)
+    # leg_6.set_position(px, py, pz)
+    # leg_2.set_position(px, py, pz)
+    # leg_3.set_position(px, py, pz)
+    # leg_6.set_position(px, py, pz)
+
+    # leg_2.set_position(px, py2, pz)
+    # leg_4.set_position(px, py2, pz)
+    # leg_5.set_position(px, py2, pz)
+    # time.sleep(1)
+    # leg_1.set_position(px, py2, pz)
+    # leg_3.set_position(px, py2, pz)
+    # leg_6.set_position(px, py2, pz)
+
+    # leg_2.set_position(px, py, pz)
+    # leg_4.set_position(px, py, pz)
+    # leg_5.set_position(px, py, pz)
+    # time.sleep(1)
     # set_all_legs_walk_start()
     # # set_all_legs_walk_start()
     # time.sleep(1)

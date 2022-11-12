@@ -6,7 +6,7 @@ from inspect import currentframe, getframeinfo
 cf = currentframe()
 filename = getframeinfo(cf).filename
 
-SERIAL_PORT = 'COM4'
+SERIAL_PORT = 'COM3'
 
 try:
     controller = lewansoul_lx16a.ServoController(
