@@ -9,7 +9,7 @@ Type: AFK
 
 ## What to build
 
-Build a fresh dashboard: a Vite app with a three.js scene. It connects to a WebSocket feed from the brain and draws the leg live from reported joint angles, starting with a simple segment model. The brain publishes joint angles and leg controller state on the feed. The leg is drawn using forward kinematics from the `kinematics` package, built here with the leg geometry as configuration (coxa 50, femur 90, tibia 135, tibia offset 0°).
+Build a fresh dashboard: a Vite + React app styled with Tailwind CSS (wherever possible, rather than hand-written CSS), with a three.js scene rendered through React Three Fiber. It connects to a WebSocket feed from the brain and draws the leg live from reported joint angles, starting with a simple segment model. The brain publishes joint angles and leg controller state on the feed. The leg is drawn using forward kinematics from the `kinematics` package, built here with the leg geometry as configuration (coxa 50, femur 90, tibia 135, tibia offset 0°).
 
 ## Acceptance criteria
 

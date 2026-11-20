@@ -1,0 +1,14 @@
+{
+  "name": "@hexapotamaus/protocol",
+  "version": "0.0.0",
+  "description": "CAN message definitions and encode/decode, shared by the brain, the simulated leg and the viewer.",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  }
+}

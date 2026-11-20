@@ -132,7 +132,7 @@ The milestone is done when the rig automatically shows all of the following:
     - the power-on check, the endurance and acceptance runs
     - a message log, and a WebSocket feed for the viewer
   - **sim:** the simulated leg on a virtual CAN bus. It covers leg controller behaviour, simulated switches driven by the rig layout, and configurable injected errors.
-  - **dashboard:** a fresh Vite app with a three.js viewer and controls, fed by the brain's WebSocket and able to replay logs.
+  - **dashboard:** a fresh Vite + React app, styled with Tailwind CSS wherever possible, with a three.js viewer (via React Three Fiber) and controls, fed by the brain's WebSocket and able to replay logs.
   - **leg-controller firmware:** C++ with PlatformIO on the official espressif32 platform, Arduino core 3.3.12, on a XIAO ESP32-C6.
 - **The protocol, defined in a spec doc during the first slice:**
   - **Joint setpoint frame:** three joint angles as int16 in 0.01° steps, plus a sequence number, in 8 bytes, one frame per leg per tick at about 50 Hz.

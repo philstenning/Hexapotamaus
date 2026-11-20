@@ -116,7 +116,7 @@ Both put the middle hips **about 1.5–1.7× further out than the corner hips**,
 
 ### Where the original Hexapotamaus sits
 
-From [`packages/robot/src/leg_calculations_2.py`](../../packages/robot/src/leg_calculations_2.py):
+From [`packages/robot/src/leg_calculations_2.py`](https://github.com/philstenning/Hexapotamaus/blob/v1-python/packages/robot/src/leg_calculations_2.py):
 
 - coxa (motor 1 to motor 2) 50 mm; `legcalculations.py` says 40
 - femur (motor 2 to motor 3) 68 mm; 70 in the older file
@@ -333,5 +333,5 @@ Hobby reference designs [H]
 
 Project files
 
-- Original leg constants: [`packages/robot/src/leg_calculations_2.py`](../../packages/robot/src/leg_calculations_2.py) and [`packages/robot/src/legcalculations.py`](../../packages/robot/src/legcalculations.py)
+- Original leg constants: [`packages/robot/src/leg_calculations_2.py`](https://github.com/philstenning/Hexapotamaus/blob/v1-python/packages/robot/src/leg_calculations_2.py) and [`packages/robot/src/legcalculations.py`](https://github.com/philstenning/Hexapotamaus/blob/v1-python/packages/robot/src/legcalculations.py)
 - Photos of v1 (body layout inferred from these): [`images/`](../../images/)

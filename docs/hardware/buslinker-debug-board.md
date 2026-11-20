@@ -116,7 +116,7 @@ Points to know:
 - Binding (sharing) persists across reboots. Attaching does not, so re-attach after a reboot or "when the device resets or is physically unplugged/replugged" [P: usbipd README]. `--auto-attach` is a real `attach` option [P: usbipd-win source tests].
 - "As long as the USB device is attached to WSL, it cannot be used by Windows" [P: MS Learn]. You cannot run Hiwonder's Windows "Bus Servo Terminal" at the same time as WSL code.
 - Permissions: on this install systemd and udev are running, and Ubuntu's `50-udev-default.rules` gives `KERNEL=="tty[A-Z]*[0-9]"` devices `GROUP="dialout"`. User `phils` is already in `dialout` [L]. On a fresh machine run `sudo usermod -aG dialout $USER`, then restart WSL with `wsl --shutdown`.
-- The original code used `SERIAL_PORT = 'COM3'` [R: `packages/robot/src/setup.py`]. Under WSL this becomes `/dev/ttyUSB0`.
+- The original code used `SERIAL_PORT = 'COM3'` [R: `packages/robot/src/setup.py`, tag `v1-python`]. Under WSL this becomes `/dev/ttyUSB0`.
 
 ### Windows-native alternative
 
@@ -247,4 +247,4 @@ Ordered from least to most hardware:
 - **Sigmanortec**: reseller listing "TTL/USB Module, BusLinker V2.4", <https://sigmanortec.ro/en/ttl-usb-module-buslinker-v24-for-serial-servomotors>. Says CH340C, "74HC1240", four servo connectors, 6–8.4 V.
 - **OpenELAB**: BusLinker V3.0 listing, <https://openelab.io/products/buslinker-v3-servo-board>. A different board.
 
-**Repo:** `packages/robot/src/lewansoul_lx16a.py`, `setup.py`, `main_1.py`, `main_3.py`.
+**Repo (tag `v1-python`):** `packages/robot/src/lewansoul_lx16a.py`, `setup.py`, `main_1.py`, `main_3.py`.

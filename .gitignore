@@ -1,4 +1,4 @@
-*.pyc
+dist
 /driver
 
 node_modules

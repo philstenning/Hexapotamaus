@@ -1,8 +1,32 @@
 # Hexapotamaus
 
-A pink six-legged robot, built using inverse kinematics in python.
+A pink six-legged robot. The 2021 version ran inverse kinematics in Python on a Raspberry Pi; that code is kept at the git tag `v1-python`.
+
+The rebuild starts with a single leg on a calibration rig: a leg controller (XIAO ESP32-C6) per leg on a CAN bus, driven by a TypeScript brain, with a simulated leg that speaks the same protocol. See the [single-leg milestone spec](.scratch/single-leg/spec.md).
 
 ![main image](images/PXL_20211211_112616037.jpg)
+
+## Workspace layout
+
+A pnpm workspace on Node 24 LTS (see `.nvmrc`), TypeScript and Vitest.
+
+| Package | What it holds |
+|---|---|
+| `packages/protocol` | CAN message definitions and encode/decode, shared by the brain, the simulated leg and the viewer |
+| `packages/kinematics` | Leg geometry, forward and inverse kinematics, reachability. Pure functions |
+| `packages/brain` | The controller: frame transport, control loop, leg sessions, calibration, the viewer feed |
+| `packages/sim` | The simulated leg on a virtual CAN bus, with simulated switches and injected errors |
+| `packages/dashboard` | Placeholder for the leg viewer: Vite, React, Tailwind and three.js (rebuilt in slice 04) |
+
+Packages are TypeScript source with no build step: Vitest runs them directly, and Node 24 runs `.ts` files natively.
+
+## Running the tests
+
+```sh
+pnpm verify      # install, type-check every package, run every test
+pnpm test        # tests only (or `pnpm test --watch`)
+pnpm typecheck   # type-check only
+```
 
 ## Bus servo
 The servos used in this robot:
@@ -16,13 +40,13 @@ The manufacturer's LX-16A download (manuals, protocol PDFs, Arduino/STM32/51 sam
 and the CH341 USB-serial driver (`ch341ser.exe`, for the servo debug board) are no longer tracked in git.
 They live in `vendor-archive/` locally (gitignored) and are archived at:
 
-**Archive location:** _TODO: add the OneDrive link/path here_
+**Archive location:** `C:\Users\phils\OneDrive\2026\making\vendor-archive` (the owner's OneDrive)
 
 The key documents to keep handy are the _LX-16A Serial Bus Servo User Manual_ and the
-_Hiwonder Bus Servo Communication Protocol_ PDFs. The Python servo library we actually use
-is still in git at `packages/robot/LewanSoul/` (from [maximkulkin/lewansoul-lx16a](https://github.com/maximkulkin/lewansoul-lx16a)).
+_Hiwonder Bus Servo Communication Protocol_ PDFs. The Python servo library the 2021 version used
+(from [maximkulkin/lewansoul-lx16a](https://github.com/maximkulkin/lewansoul-lx16a)) is at `packages/robot/LewanSoul/` in the tag `v1-python`.
 
-Note: these files are still in older git history, so the repo's `.git` folder stays large unless history is rewritten.
+Note: these files are still in older git history, so a fresh clone is about 113 MB. That was a deliberate choice: the history was already public.
 
 ## Useful links
 [examples](https://www.instructables.com/How-to-Configure-and-Use-Smart-Servos-LewanSoul-LX/)
@@ -38,4 +62,4 @@ https://www.youtube.com/watch?v=M71dl8aHCI0&list=PLQYW5Ukp-1D-amIge4qTAPyu934yNj
 
 MIT. See [LICENSE](LICENSE). This covers the code, CAD and documentation.
 
-Exception: `packages/robot/LewanSoul/` is third-party code under GPLv3 and keeps that licence. It is planned to be replaced by our own LX-16A driver.
+Exception: `packages/robot/LewanSoul/` in the tag `v1-python` is third-party code under GPLv3 and keeps that licence. It is not part of the current code.

@@ -1,0 +1,14 @@
+{
+  "name": "@hexapotamaus/brain",
+  "version": "0.0.0",
+  "description": "The laptop/Pi controller: frame transport, control loop, leg sessions, calibration and the viewer feed.",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  }
+}

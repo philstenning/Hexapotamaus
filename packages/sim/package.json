@@ -1,0 +1,14 @@
+{
+  "name": "@hexapotamaus/sim",
+  "version": "0.0.0",
+  "description": "The simulated leg on a virtual CAN bus, with simulated switches and injected errors.",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  }
+}

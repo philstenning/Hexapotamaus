@@ -1,20 +1,14 @@
 {
-  "name": "dashboard",
+  "name": "@hexapotamaus/dashboard",
   "version": "0.0.0",
+  "description": "Placeholder. Slice 04 rebuilds it as a Vite + React + Tailwind app with a three.js leg viewer.",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
-  },
-  "devDependencies": {
-    "@types/react": "^17.0.33",
-    "@types/react-dom": "^17.0.10",
-    "@vitejs/plugin-react": "^1.0.7",
-    "typescript": "^4.4.4",
-    "vite": "^2.7.2"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
   }
 }
