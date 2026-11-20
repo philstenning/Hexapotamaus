@@ -2,3 +2,5 @@
 /driver
 
 node_modules
+# Vendor downloads kept off git (copy to OneDrive, see readme)
+/vendor-archive/
