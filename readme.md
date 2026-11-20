@@ -6,6 +6,22 @@ The rebuild starts with a single leg on a calibration rig: a leg controller (XIA
 
 ![main image](images/PXL_20211211_112616037.jpg)
 
+## Leg parts
+
+Each leg has three segments and three joints, one LX-16A servo per joint. The names match [CONTEXT.md](CONTEXT.md).
+
+![Leg parts: body, coxa joint, coxa, femur joint, femur, tibia joint, tibia, foot](images/leg-parts.svg)
+
+| Part | What it does |
+|---|---|
+| **Coxa joint** (hip) | Vertical axis: swings the whole leg forward and back |
+| **Coxa** (50 mm) | The short link from the body to the femur joint |
+| **Femur joint** | Horizontal axis: lifts the leg up and down |
+| **Femur** (90 mm) | The thigh, from the femur joint to the tibia joint |
+| **Tibia joint** (knee) | Horizontal axis: moves the foot in and out |
+| **Tibia** (135 mm) | The shin, from the knee to the foot |
+| **Foot** | The sprung tip that touches the ground, with the foot contact switch |
+
 ## Workspace layout
 
 A pnpm workspace on Node 24 LTS (see `.nvmrc`), TypeScript and Vitest.

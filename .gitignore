@@ -10,3 +10,7 @@ node_modules
 
 # Personal to-do list
 /to-do.md
+
+# SolidCraft lock files and backups
+.~*.sc.lock
+*.sc.bak

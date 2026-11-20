@@ -29,3 +29,21 @@ Design the new leg in SolidCraft, following the modelling rules: every part from
 ## Blocked by
 
 None. Can start immediately.
+
+## Comments
+
+2026-11-20: Progress, and where to pick up.
+
+Done in `hardware/cad/hexapotamaus.sc` (SolidCraft, connected from WSL with `--connect 127.0.0.1:27878`; Claude can't save to the `\\wsl.localhost` path, so the owner saves with Ctrl+S):
+
+- `Leg` component with the four leg parameters, plus `stance_reach` 80 / `stance_drop` 110, `fit_clearance` 0.2, `grip_interference` 0.2, `m3_pilot_d` 2.8, `servo_screw_hole_d` 2.
+- `LX-16A` reference part inside `Leg`: the real case shape (lips, top ridge, horn relief, bottom notch, panel, connector recess, mounting holes on the lips), all `servo_*` parameters. Sources and checks: `docs/hardware/lx-16a-dimensions.md`.
+- `Leg skeleton` sketch: coxa, femur and tibia lines and the foot tip in the default stance, fully constrained.
+- Old Fusion parts for reference: `hardware/cad/reference/fusion-v1/`.
+- Design rules agreed: ADR 0005 (small flat-printed parts bolted together; arm = two side plates + base piece; brackets grip the servo; joiner for the 90° coxa-to-femur turn).
+
+Next:
+
+1. **Owner to answer:** in 2021, which way did the femur and tibia servo bodies point from their shafts (back to the body, out along the leg, up or down)? A STEP of the old leg assembly would settle it. This sets each segment's length budget.
+2. Place three `LX-16A` occurrences on the skeleton (coxa shaft vertical; femur and tibia shafts horizontal along Y).
+3. Design the side plate, base piece, bracket and joiner as flat sketches + extrudes, sized from the servo parameters.

@@ -29,6 +29,14 @@ _Avoid_: motor 1/2/3
 The tip of the tibia, the only part of a leg meant to touch the ground.
 _Avoid_: toe, end effector
 
+**Arm**:
+A printed part fixed to a servo's output: it clamps the spline on one side and turns on the passive boss on the other. The horn is built into it. It is made of two flat side plates and a small base piece, bolted together (see ADR 0005).
+_Avoid_: horn (Hiwonder's horn isn't used), U-bracket
+
+**Bracket**:
+A printed sleeve that grips a servo's case. An arm bolts to the bracket of the next joint's servo to make a segment.
+_Avoid_: servo holder, bottom cover (Hiwonder's metal part)
+
 ### Control
 
 **Brain**:
