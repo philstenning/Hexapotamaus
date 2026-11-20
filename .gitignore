@@ -4,3 +4,6 @@
 node_modules
 # Vendor downloads kept off git (copy to OneDrive, see readme)
 /vendor-archive/
+
+# Local MCP config (contains machine-specific paths)
+.mcp.json

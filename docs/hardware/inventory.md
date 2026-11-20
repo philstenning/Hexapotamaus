@@ -1,0 +1,25 @@
+# Hardware inventory
+
+Hardware the owner has on hand for Hexapotamaus. "Unknown" means the detail isn't recorded yet. Fill it in from the part itself.
+
+Last updated 2026-11-20.
+
+| Item | Qty | Model / variant | Role | Notes |
+|---|---|---|---|---|
+| Hiwonder LX-16A serial bus servo | 18 | LX-16A (6–8.4 V, 19.5 kg·cm stall at 7.4 V) | Leg joints, 6 legs × 3 | IDs in use per `packages/robot/src/setup.py`: leg 1 = 25, 26, 27; leg 2 = 38, 39, 40; leg 3 = 9, 10, 11; leg 4 = 1, 2, 3; leg 5 = 17, 18, 43; leg 6 = 34, 33, 35. Manuals and protocol are in `vendor-archive/` |
+| Hiwonder BusLinker TTL/USB debugging board | 1 | CH340-based. Board revision unknown (V2.2 / V2.4 / V2.5 exist) | **Prototyping only**: laptop drives servos over USB, bus debugging | See [buslinker-debug-board.md](buslinker-debug-board.md) |
+| ESP32 dev board | At least 1 (exact count unknown) | Seeed Studio XIAO ESP32C6 (ESP32-C6FH4: 1 × RISC-V 160 MHz plus a 20 MHz LP core, 512 KB SRAM, 4 MB flash) | Leg controller for the single-leg milestone | 13 clean GPIOs (0, 1, 2, 6, 7, 16–23); avoid the strapping pins 4, 5, 8, 9, 15. Native USB Serial/JTAG on GPIO12/13. 2 × TWAI (CAN), 2 × UART + LP UART. **Not 5 V tolerant** (3.6 V absolute max), so the servo bus needs level shifting. Official PlatformIO platform-espressif32 v8.0.0 supports it with Arduino core 3.3.12. Sources: [Seeed wiki](https://wiki.seeedstudio.com/xiao_esp32c6_getting_started/), [ESP32-C6 datasheet](https://documentation.espressif.com/esp32-c6_datasheet_en.html), [PlatformIO v8.0.0](https://github.com/platformio/platform-espressif32/releases/tag/v8.0.0) |
+| Microswitch | Lots (count unknown) | Unknown | Foot contact or limit sensing | The BusLinker has no switch inputs; read them via an ESP32 or similar |
+| 3D printer | 1 | Unknown | Printing frame and leg parts | |
+| Raspberry Pi | 1 | Unknown. The photo `images/PXL_20211211_112551701.jpg` shows a full-size-HDMI, micro-USB-power, 3.5 mm-jack board, which fits the Pi 2 B / 3 B / 3 B+ form factor (unconfirmed) | Original build's main computer | The same photo also shows a perfboard and a white board with a blue screw terminal on the robot. It may be a Hiwonder servo board (unconfirmed) |
+| Oscilloscope | 1 | Rigol DS1054 (4-channel) | Debugging signals: the servo bus, CAN, switch bounce, power rails | The owner is experienced with it. Use it to check the half-duplex bus timing and the 5 V/3.3 V levels |
+| Logic level shifter (3.3 V ↔ 5 V) | Some (count unknown) | Unknown (probably BSS138 bidirectional boards; to check) | Connecting the ESP32 to the 5 V LX-16A bus | The owner has used them with Arduinos and the Pi. Bidirectional MOSFET shifters suit the single-wire, half-duplex servo bus at 115200 baud |
+| USB-CAN adapter (on order, arriving 2026-11-21) | 1 | DSD TECH SH-C31A: STM32G431, SIT1051T transceiver, factory candleLight firmware (gs_usb), no isolation | Laptop/brain to CAN bus, shows up as SocketCAN `can0` | Up to 1 Mbit/s classic CAN. Has a built-in 120 Ω termination switch and a 3.81 mm screw terminal (CAN_H/CAN_L/GND). On WSL, attach it with usbipd. Sources: [product page](https://www.deshide.com/product-details_SH-C31A.html), [DSD TECH GitHub](https://github.com/dsdtech-official/can-adapters/tree/main/SH-C31A) |
+| CAN transceiver board (on order, arriving 2026-11-21) | Several | SN65HVD230 (3.3 V) | CAN physical layer for each XIAO leg controller | Many of these boards have a 120 Ω terminator fitted. Only the two ends of the bus should be terminated, so remove it on middle nodes once there's more than one leg |
+| Bench power supply | 1 | Eventek KPS3010DF, 0–32 V / 0–10.2 A, adjustable current limit | Servo power on the bench | Run at 7.4 V with the current limit at about 3 A at first. That limits the damage when a joint jams, until limit switches and faults have proven themselves |
+| Electrolytic capacitor | Several | 1000 µF, 16 V (probably; check the rating on the can) | Bulk capacitance across the servo supply near the leg | Left over from WLED projects |
+| Quick-blow fuses | Several (ratings unknown) | Unknown | Short-circuit protection in the servo supply | On the bench, use one rated a little above the PSU current limit (e.g. 5 A against a 3 A limit), so the PSU limit acts first and the fuse covers mistakes. On the battery-powered robot, fuse every leg's supply branch: a shorted LiPo can deliver far more current than a bench supply |
+
+## Emergency stop (bench)
+
+The bench emergency stop is unplugging the PSU's banana leads, which sit within arm's reach. It cuts servo power the same way a button in the line would. If the robot ever runs away from the bench, fit a latching emergency-stop button rated for 10 A or more in the servo line.
