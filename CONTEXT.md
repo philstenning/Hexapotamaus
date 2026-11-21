@@ -34,7 +34,7 @@ A printed part fixed to a servo's output: it clamps the spline on one side and t
 _Avoid_: horn (Hiwonder's horn isn't used), U-bracket
 
 **Bracket**:
-A printed sleeve that grips a servo's case. An arm bolts to the bracket of the next joint's servo to make a segment.
+A printed sleeve that grips a servo's case at its far end, so the segment can carry on outwards from it (see ADR 0005).
 _Avoid_: servo holder, bottom cover (Hiwonder's metal part)
 
 ### Control

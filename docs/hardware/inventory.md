@@ -19,6 +19,7 @@ Last updated 2026-11-20.
 | Bench power supply | 1 | Eventek KPS3010DF, 0–32 V / 0–10.2 A, adjustable current limit | Servo power on the bench | Run at 7.4 V with the current limit at about 3 A at first. That limits the damage when a joint jams, until limit switches and faults have proven themselves |
 | Electrolytic capacitor | Several | 1000 µF, 16 V (probably; check the rating on the can) | Bulk capacitance across the servo supply near the leg | Left over from WLED projects |
 | Quick-blow fuses | Several (ratings unknown) | Unknown | Short-circuit protection in the servo supply | On the bench, use one rated a little above the PSU current limit (e.g. 5 A against a 3 A limit), so the PSU limit acts first and the fuse covers mistakes. On the battery-powered robot, fuse every leg's supply branch: a shorted LiPo can deliver far more current than a bench supply |
+| MakerBeam aluminium profile | Unknown lengths (the 2021 body frame) | MakerBeam 10 × 10 mm, black, with steel T and corner brackets and M3 hardware ([makerbeam.com](https://www.makerbeam.com/makerbeam/)) | Body frame; the calibration rig's hip mount should copy how a leg fixes to it | Photos: `images/PXL_20261121_170135529.jpg` (beams, brackets and printed parts), `PXL_20261121_170338000.jpg` (coxa servo and its body bracket beside a beam), `PXL_20261121_170722932.jpg` (the hip mount that worked: a channel over the beam, clamped by one M3 screw into a T-slot nut) |
 
 ## Emergency stop (bench)
 

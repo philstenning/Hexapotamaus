@@ -74,6 +74,8 @@ https://www.youtube.com/watch?v=M71dl8aHCI0&list=PLQYW5Ukp-1D-amIge4qTAPyu934yNj
 
 [connector](https://www.molex.com/molex/products/family/minispox)
 
+[LX-16A bracket set, with dimension drawings](https://www.hiwonder.com/products/servo-bracket-compatible-with-lx-16a) (summarised in [lx-16a-dimensions.md](docs/hardware/lx-16a-dimensions.md))
+
 ## Licence
 
 MIT. See [LICENSE](LICENSE). This covers the code, CAD and documentation.

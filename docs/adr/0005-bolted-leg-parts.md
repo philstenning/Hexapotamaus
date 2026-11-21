@@ -3,11 +3,21 @@
 Each leg segment is built from small printed parts screwed together, not printed as one piece. This follows the 2021 build:
 
 - an **arm** fits over a servo's output: its built-in horn clamps the spline at one side, and it turns on the passive boss at the other. It is itself three parts: two flat side plates (one on the spline, one on the boss) and a small base piece bolted between them;
-- a **bracket** is a sleeve that grips the next servo's case;
+- a **bracket** is a sleeve that grips a servo's case at its far end;
 - the arm and the bracket are bolted together with M3 screws into Ø2.8 pilot holes, which the screw threads itself (normal slicer wall settings were enough). No inserts or nuts. Where two joint axes are at 90° (coxa to femur), a joiner sits between the arm and the bracket;
 - brackets fix to the servo with the factory self-tapping screws through Ø2 holes in all four corners.
 
-So a segment is "the arm on one joint's servo plus the bracket that holds the next joint's servo".
+The 2021 layout, from the body outwards: `[body]-[ __o]--[o__]--[o__]>` (`o` is a servo's shaft). The coxa servo's case sits in the body with its shaft outboard; the femur and tibia servos have their shafts inboard and their cases pointing out along their own segment. So:
+
+- **coxa** = arm on the coxa servo + joiner (90° turn) + arm on the femur servo. No servo case in it, so it is light and short;
+- **femur** = femur servo case + bracket on its far end + link + arm on the tibia servo;
+- **tibia** = tibia servo case + bracket on its far end + the tibia beam to the foot.
+
+Photos of a 2021 leg laid flat: `images/PXL_20261121_160544336.jpg`, `PXL_20261121_160552934.jpg`, `PXL_20261121_160601335.jpg`. They also show:
+
+- the coxa servo is held by a bracket on its far end, and that bracket mounts the leg to the body, a frame of 10 × 10 mm MakerBeam profile (`images/PXL_20261121_170135529.jpg`, `PXL_20261121_170338000.jpg`). The version that worked best (`images/PXL_20261121_170722932.jpg`): the end cap carries a block with a 10 mm channel that sits over the beam, and one M3 machine screw through its middle into a nut in the beam's T-slot clamps it tight. The leg can be slid along the beam before tightening;
+- the femur bracket bolts straight to the base of the tibia arm (two screws), with no joiner, because those two axes are parallel;
+- the tibia beam has its bracket sleeve printed into it, with lightening holes and a rubber tip at the foot.
 
 We chose this because the parts are awkward to print in one piece. Every part is designed to **print flat**:
 

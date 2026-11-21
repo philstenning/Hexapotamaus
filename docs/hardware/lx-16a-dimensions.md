@@ -55,6 +55,19 @@ These are the stock 1.5 mm sheet-metal brackets. Their hole patterns tell us wha
 
 The brackets and the 2021 `Arm` share the 14 mm pitch circle. The owner doesn't use Hiwonder's horn (see below).
 
+### Hiwonder's LX-16A bracket set (product page, read 2026-11-21)
+
+Source: [Servo Bracket Compatible with Hiwonder LX-16A Servo](https://www.hiwonder.com/products/servo-bracket-compatible-with-lx-16a). The dimensions are only in the page's images (Hiwonder's, not copied here); the values below are transcribed from them. All four are hard aluminium alloy with a black powder coat. The set includes a screw package.
+
+| Bracket | Overall (as listed) | Weight | Dimensions from the drawing |
+|---|---|---|---|
+| **Straight U-shaped** | 41.4 × 23.7 × 43.3 | 10.5 g | 40 wide inside the U, 38 tall arms, 2 thick, 22 deep base. Base: Ø7 centre hole, Ø3 and Ø2 holes on a 10 mm square / 14 mm spacing round it. Arms: a Ø3 hole and a Ø2 hole on the centreline, two 2.5 × 4 slots, and a round notch at the tip with a hole each side |
+| **Side bracket** | 35 × 29.5 × 11.6 | 5.4 g | 35 × 30 plate, Ø8 centre hole with 4 × Ø2 on a 10 mm square (14.1 mm diagonal, so the 14 mm pitch circle). Ears 10 high, Ø2 holes 24 apart (the drawing says 24.45) |
+| **Bottom bracket** | 35 × 25 × 11.6 | 4.4 g | 35 × 25 plate, 8 × Ø2 on the 14 mm pitch circle (dimensioned 14 and 10). Ears 14 high with Ø2 holes |
+| **Oblique (inclined) U-shaped** | 40 × 35.1 × 33.3 | 9.4 g | 40 wide inside, 2 thick, 25 deep base with three Ø8 holes and Ø2 holes. Arms 42 tall overall (28 inside), cut at an angle, each with a Ø8 hole and Ø2 holes 14 apart |
+
+Useful for us: the 14 mm hole circle (a 10 mm square) is the standard pattern for anything that bolts to the output side, and the U brackets' 40 mm inside span shows how much room an arm needs round the servo's height (36.3 over the shaft and boss).
+
 ## Still to measure on a real servo
 
 - Output spline: Ø6 brass in the owner's model; tooth count and exact diameter to confirm
