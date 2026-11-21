@@ -35,4 +35,6 @@ Once the design has settled, with the limit switches in place to prevent breakag
 - **Every part has a flat print orientation**, chosen when it is designed: no part needs a vertical circle or a load across its layers.
 - **Every arm and bracket has a bolted interface** that has to stay the same across reprints and versions. The CAD defines it once, as parameters, and both parts use it.
 - **Screw holes are pilot holes sized for screws to self-tap into PLA.** Re-threading a hole means reprinting that part.
+- **Arm bases always take the screw head.** Their two holes (26 mm apart) are M3 clearance; the screws go from inside the arm, before the servo and side plates are fitted, into Ø2.8 pilots in the joiner or the bracket end cap. So any arm base fits any joiner or bracket.
+- **The femur's length is set by a long tibia arm** (`tibia_arm_reach`, derived from `femur_length`), whose base bolts straight to the femur bracket, instead of a separate link. The base piece is the standard one; only the two side plates are longer.
 - **Segment lengths come from the arm and bracket together.** Changing `femur_length` changes the arm, the bracket or a spacer between them, not one big part.
