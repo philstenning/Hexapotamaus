@@ -67,3 +67,11 @@ Next:
 3. Limit switch cams and KW12 mounts on each joint; a KW12 reference body and a wire route.
 4. Real revolute joints, then find each joint's range.
 5. Export STL/3MF of every part to `hardware/3d-parts/`.
+
+2026-11-22: Bracket screws reversed; mating holes to investigate.
+
+- All printed-part screws are M3 countersunk with 5.6 mm heads (`m3_csk_head_d`), except the passive-side boss screw, the servo screws and the MakerBeam screw.
+- The bracket end-cap screws now go in from inside the bracket: Ø3.2 clearance holes (`m3_clear_d`) with a Ø6.0 countersink (`m3_csk_d`) on the inside face, and the end cap is 3.6 mm thick (`bracket_end_t`, was 2.8). Test print pending.
+- **To investigate:** the parts these screws go into (hip mount, tibia arm base, tibia beam) still have Ø3.2 clearance holes, not Ø2.8 pilots. The owner screws straight into the printed part and finds it holds: the screw cuts its own thread on the first fitting, and it doesn't work loose or rattle. Decide whether to keep that, or change the mating holes to pilots. The arm base is shared with the joiner joint, where the screws go the other way. ADR 0005 still says the arm bases take the heads.
+- The tibia beam's screw holes to the tibia bracket aren't in the model yet.
+- Every printable part has a print face, and the 3MFs in `hardware/3d-parts/` export laid flat (`lay_on_print_faces`).
