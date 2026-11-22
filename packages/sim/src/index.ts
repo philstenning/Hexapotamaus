@@ -1,1 +1,1 @@
-export const packageName = "@hexapotamaus/sim";
+export * from "./simulated-leg.ts";

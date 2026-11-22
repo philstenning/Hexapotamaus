@@ -47,6 +47,10 @@ _Avoid_: main controller, master, host
 The microcontroller dedicated to one leg. It drives that leg's servos, reads its switches and enforces its joint limits.
 _Avoid_: leg MCU, leg board, slave
 
+**Joint setpoint**:
+The joint angles the brain wants a leg at now, sent to that leg once per control tick (50 Hz) with a sequence number. The leg controller moves smoothly towards the newest one.
+_Avoid_: command, target (on their own)
+
 **Hold**:
 The leg controller's response to silence from the brain: stay at the last setpoint with torque on, until the brain explicitly says to resume.
 _Avoid_: pause, freeze
@@ -98,6 +102,9 @@ _Avoid_: test grid
 **Simulated leg**:
 A software stand-in for a leg and its leg controller. It speaks the same CAN protocol on a virtual bus and carries deliberately injected errors, so calibration can be tested without hardware.
 _Avoid_: mock leg, fake leg, digital twin
+
+**Conformance suite**:
+The tests that drive a leg purely through CAN frames to check it follows the protocol spec. The same suite runs against the simulated leg and the real leg.
 
 **Probe point**:
 One known position on the calibration rig that the foot touches. Height is read with the foot contact switch; sideways touches use a switch on the rig.

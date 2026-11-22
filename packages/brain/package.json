@@ -10,5 +10,11 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "test": "vitest run"
+  },
+  "dependencies": {
+    "@hexapotamaus/protocol": "workspace:*"
+  },
+  "devDependencies": {
+    "@hexapotamaus/sim": "workspace:*"
   }
 }

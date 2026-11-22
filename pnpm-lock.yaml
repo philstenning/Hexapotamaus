@@ -18,7 +18,25 @@ importers:
         specifier: ^5.1.1
         version: 5.1.1(@types/node@24.19.2)(vite@8.3.8(@types/node@24.19.2))
 
-  packages/brain: {}
+  packages/brain:
+    dependencies:
+      '@hexapotamaus/protocol':
+        specifier: workspace:*
+        version: link:../protocol
+    devDependencies:
+      '@hexapotamaus/sim':
+        specifier: workspace:*
+        version: link:../sim
+
+  packages/conformance:
+    dependencies:
+      '@hexapotamaus/protocol':
+        specifier: workspace:*
+        version: link:../protocol
+    devDependencies:
+      '@hexapotamaus/sim':
+        specifier: workspace:*
+        version: link:../sim
 
   packages/dashboard: {}
 
@@ -26,7 +44,11 @@ importers:
 
   packages/protocol: {}
 
-  packages/sim: {}
+  packages/sim:
+    dependencies:
+      '@hexapotamaus/protocol':
+        specifier: workspace:*
+        version: link:../protocol
 
 packages:
 
