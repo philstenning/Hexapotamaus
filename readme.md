@@ -32,7 +32,10 @@ A pnpm workspace on Node 24 LTS (see `.nvmrc`), TypeScript and Vitest.
 | `packages/kinematics` | Leg geometry, forward and inverse kinematics, reachability. Pure functions |
 | `packages/brain` | The controller: frame transport, control loop, leg sessions, calibration, the viewer feed |
 | `packages/sim` | The simulated leg on a virtual CAN bus, with simulated switches and injected errors |
+| `packages/conformance` | The protocol conformance suite: drives a leg only through CAN frames, so the same tests run against the simulated leg and the real one |
 | `packages/dashboard` | Placeholder for the leg viewer: Vite, React, Tailwind and three.js (rebuilt in slice 04) |
+
+The brain and the leg controllers talk over CAN using the [leg CAN protocol](docs/protocol.md).
 
 Packages are TypeScript source with no build step: Vitest runs them directly, and Node 24 runs `.ts` files natively.
 

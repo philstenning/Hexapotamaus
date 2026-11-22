@@ -1,1 +1,2 @@
-export const packageName = "@hexapotamaus/brain";
+export * from "./control-loop.ts";
+export * from "./status-monitor.ts";

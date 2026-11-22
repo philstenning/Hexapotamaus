@@ -1,0 +1,20 @@
+{
+  "name": "@hexapotamaus/conformance",
+  "version": "0.0.0",
+  "description": "The protocol conformance suite: drives a leg only through CAN frames, against the simulated leg or the real one.",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@hexapotamaus/protocol": "workspace:*"
+  },
+  "devDependencies": {
+    "@hexapotamaus/sim": "workspace:*"
+  }
+}
