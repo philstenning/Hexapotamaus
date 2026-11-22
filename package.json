@@ -11,7 +11,8 @@
     "test": "vitest run",
     "verify": "pnpm install && pnpm typecheck && pnpm test",
     "sim": "node packages/sim/src/cli.ts",
-    "brain": "node packages/brain/src/cli.ts"
+    "brain": "node packages/brain/src/cli.ts",
+    "dashboard": "pnpm --filter @hexapotamaus/dashboard dev"
   },
   "devDependencies": {
     "@types/node": "^24.19.2",

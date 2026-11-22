@@ -27,7 +27,7 @@ const maxJointError = (s: StatusLine, setpoint: StatusLine["angles"]) => Math.ma
 
 /** Runs the brain CLI to completion and returns the status lines it printed. */
 async function runBrain(args: string[]): Promise<StatusLine[]> {
-  const brain = spawn(process.execPath, [BRAIN_CLI, "--interface", INTERFACE, "--json", ...args], {
+  const brain = spawn(process.execPath, [BRAIN_CLI, "--interface", INTERFACE, "--json", "--feed-port=0", ...args], {
     stdio: ["ignore", "pipe", "inherit"],
   });
   const lines: StatusLine[] = [];

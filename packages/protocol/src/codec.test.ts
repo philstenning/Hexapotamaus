@@ -12,6 +12,7 @@ import {
   isNewerSequence,
   nextSequence,
   LegState,
+  legStateName,
   MAX_JOINT_ANGLE_DEG,
   type CanFrame,
   type JointSetpoint,
@@ -140,6 +141,16 @@ describe("status frame", () => {
     const frame = encodeLegStatus(status);
     expect(frame.id).toBe(0x019);
     expect(hex(frame)).toBe("E8 03 DC 05 30 F8 01 08");
+  });
+
+  it("names each leg state, and refuses a state the protocol doesn't define", () => {
+    expect([LegState.Uncalibrated, LegState.Ready, LegState.Hold, LegState.Fault].map(legStateName)).toEqual([
+      "Uncalibrated",
+      "Ready",
+      "Hold",
+      "Fault",
+    ]);
+    expect(() => legStateName(7 as LegState)).toThrow(RangeError);
   });
 
   it("round-trips every state and switch", () => {

@@ -34,11 +34,11 @@ A pnpm workspace on Node 24 LTS (see `.nvmrc`), TypeScript and Vitest.
 | `packages/sim` | The simulated leg on a virtual CAN bus, with simulated switches and injected errors |
 | `packages/conformance` | The protocol conformance suite: drives a leg only through CAN frames, so the same tests run against the simulated leg and the real one |
 | `packages/socketcan` | The SocketCAN frame transport, for the brain and the simulated leg on `vcan0` or `can0`, through a small Python bridge ([ADR 0006](docs/adr/0006-socketcan-through-a-python-bridge.md)) |
-| `packages/dashboard` | Placeholder for the leg viewer: Vite, React, Tailwind and three.js (rebuilt in slice 04) |
+| `packages/dashboard` | The leg viewer: a Vite, React and Tailwind app that draws the leg live with three.js, fed by the brain ([docs/viewer.md](docs/viewer.md)) |
 
-The brain and the leg controllers talk over CAN using the [leg CAN protocol](docs/protocol.md).
+The brain and the leg controllers talk over CAN using the [leg CAN protocol](docs/protocol.md). Joint angles follow the [kinematics conventions](docs/kinematics.md); the leg geometry is configuration, in [config/leg-geometry.json](config/leg-geometry.json).
 
-Packages are TypeScript source with no build step: Vitest runs them directly, and Node 24 runs `.ts` files natively.
+Packages are TypeScript source with no build step: Vitest runs them directly, and Node 24 runs `.ts` files natively. The dashboard is the exception: Vite serves it (`pnpm dashboard`).
 
 ## Running the tests
 

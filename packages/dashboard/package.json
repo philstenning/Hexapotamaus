@@ -1,14 +1,33 @@
 {
   "name": "@hexapotamaus/dashboard",
   "version": "0.0.0",
-  "description": "Placeholder. Slice 04 rebuilds it as a Vite + React + Tailwind app with a three.js leg viewer.",
+  "description": "The leg viewer: a Vite + React + Tailwind app drawing the leg live with three.js, fed by the brain's WebSocket feed.",
   "private": true,
   "type": "module",
-  "exports": {
-    ".": "./src/index.ts"
-  },
   "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "test": "vitest run"
+  },
+  "dependencies": {
+    "@hexapotamaus/brain": "workspace:*",
+    "@hexapotamaus/kinematics": "workspace:*",
+    "@hexapotamaus/protocol": "workspace:*",
+    "@react-three/drei": "^10.7.9",
+    "@react-three/fiber": "^9.8.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "three": "^0.187.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/three": "^0.187.0",
+    "@vitejs/plugin-react": "^6.3.0",
+    "tailwindcss": "^4.3.5",
+    "vite": "^8.3.8"
   }
 }

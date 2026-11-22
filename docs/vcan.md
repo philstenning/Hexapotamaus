@@ -62,12 +62,14 @@ pnpm sim                      # or: pnpm sim --leg 1 --leg 2
 In another, run the brain. It streams setpoints to leg 1 and prints the leg's status four times a second:
 
 ```sh
-pnpm brain                            # every joint sweeps ±20° at 1 Hz
+pnpm brain                            # every joint sweeps ±20° at 1 Hz around the default stance
 pnpm brain --pose=10,15,-20           # holds one pose (use "=" so negative angles aren't read as options)
 pnpm brain --leg 2 --duration 5 --json   # every status frame as a JSON line, for 5 s
 ```
 
 Both default to `--interface vcan0`. The same commands work on the real bus with `--interface can0`.
+
+The brain also serves the viewer feed on `ws://127.0.0.1:8787`. To watch the leg in the browser, see [docs/viewer.md](viewer.md).
 
 ## Watching the bus
 

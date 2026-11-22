@@ -27,6 +27,14 @@ export const LegState = {
   Fault: 3,
 } as const;
 export type LegState = (typeof LegState)[keyof typeof LegState];
+export type LegStateName = keyof typeof LegState;
+
+/** The leg state's name, e.g. "Ready". */
+export function legStateName(state: LegState): LegStateName {
+  const entry = Object.entries(LegState).find(([, value]) => value === state);
+  if (!entry) throw new RangeError(`leg state ${state} is not defined`);
+  return entry[0] as LegStateName;
+}
 
 export interface SwitchStates {
   readonly coxaLimit: boolean;

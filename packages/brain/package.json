@@ -5,17 +5,21 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./viewer-feed-messages": "./src/viewer-feed-messages.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
     "test": "vitest run"
   },
   "dependencies": {
+    "@hexapotamaus/kinematics": "workspace:*",
     "@hexapotamaus/protocol": "workspace:*",
-    "@hexapotamaus/socketcan": "workspace:*"
+    "@hexapotamaus/socketcan": "workspace:*",
+    "ws": "^8.23.0"
   },
   "devDependencies": {
-    "@hexapotamaus/sim": "workspace:*"
+    "@hexapotamaus/sim": "workspace:*",
+    "@types/ws": "^8.18.2"
   }
 }

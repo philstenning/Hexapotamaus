@@ -15,7 +15,7 @@ Version 0.1 defines the setpoint and status frames. Later slices add command fra
 - **Byte order:** little-endian for every multi-byte field.
 - **Joint angle:** a signed 16-bit integer in steps of 0.01°, so 1234 means 12.34°. The range is −327.67° to +327.67°. The raw value −32768 (`0x8000`) is reserved: a sender never sends it, and a receiver treats a frame containing it as malformed. A sender rounds to the nearest 0.01° and refuses (doesn't clamp) an angle outside the range.
 - **Joint order:** always coxa, femur, tibia.
-- **Joint angle convention:** the protocol only carries joint angles. Where zero is and which way is positive is defined by the `kinematics` package (slice 05), not here.
+- **Joint angle convention:** the protocol only carries joint angles. Where zero is and which way is positive is defined by the `kinematics` package ([docs/kinematics.md](kinematics.md)), not here.
 - **Reserved bits** are sent as 0 and ignored on receipt.
 - **Malformed frames** (a known ID with the wrong data length, or a reserved value) are ignored by the receiver. They never change its state.
 

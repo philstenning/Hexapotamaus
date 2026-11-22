@@ -1,1 +1,2 @@
-export const packageName = "@hexapotamaus/kinematics";
+export * from "./geometry.ts";
+export * from "./forward.ts";
