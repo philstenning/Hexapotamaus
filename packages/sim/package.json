@@ -5,13 +5,15 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./cli": "./src/cli.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
     "test": "vitest run"
   },
   "dependencies": {
-    "@hexapotamaus/protocol": "workspace:*"
+    "@hexapotamaus/protocol": "workspace:*",
+    "@hexapotamaus/socketcan": "workspace:*"
   }
 }

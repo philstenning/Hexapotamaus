@@ -116,4 +116,4 @@ A classic frame with 8 data bytes is 111 bits plus up to 24 stuff bits, about 13
 
 ## Conformance
 
-`packages/conformance` drives a leg purely through these frames and checks that it behaves as this document says. It runs against the simulated leg in every test run, and later slices run it against the real leg. A behaviour this document requires of a leg belongs in that suite.
+`packages/conformance` drives a leg purely through these frames and checks that it behaves as this document says. Every test run runs it against the simulated leg on the in-process bus, and against the simulated leg as a separate process on `vcan0` when that interface is up ([docs/vcan.md](vcan.md)). Later slices run it against the real leg. A behaviour this document requires of a leg belongs in that suite.

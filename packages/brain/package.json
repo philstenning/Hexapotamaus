@@ -12,7 +12,8 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@hexapotamaus/protocol": "workspace:*"
+    "@hexapotamaus/protocol": "workspace:*",
+    "@hexapotamaus/socketcan": "workspace:*"
   },
   "devDependencies": {
     "@hexapotamaus/sim": "workspace:*"

@@ -103,6 +103,10 @@ _Avoid_: test grid
 A software stand-in for a leg and its leg controller. It speaks the same CAN protocol on a virtual bus and carries deliberately injected errors, so calibration can be tested without hardware.
 _Avoid_: mock leg, fake leg, digital twin
 
+**Frame transport**:
+The brain's and the simulated leg's only way onto a CAN bus: send a frame, receive other nodes' frames. It runs on the in-process bus, on the virtual CAN bus (`vcan0`) or on the real bus (`can0`).
+_Avoid_: driver, CAN library
+
 **Conformance suite**:
 The tests that drive a leg purely through CAN frames to check it follows the protocol spec. The same suite runs against the simulated leg and the real leg.
 

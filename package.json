@@ -9,7 +9,9 @@
     "build": "pnpm -r --if-present run build",
     "typecheck": "pnpm -r run typecheck",
     "test": "vitest run",
-    "verify": "pnpm install && pnpm typecheck && pnpm test"
+    "verify": "pnpm install && pnpm typecheck && pnpm test",
+    "sim": "node packages/sim/src/cli.ts",
+    "brain": "node packages/brain/src/cli.ts"
   },
   "devDependencies": {
     "@types/node": "^24.19.2",

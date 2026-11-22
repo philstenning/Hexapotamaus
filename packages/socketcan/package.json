@@ -1,0 +1,17 @@
+{
+  "name": "@hexapotamaus/socketcan",
+  "version": "0.0.0",
+  "description": "The SocketCAN frame transport (vcan0, can0) for Node: the brain and the simulated leg on a Linux CAN interface.",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@hexapotamaus/protocol": "workspace:*"
+  }
+}

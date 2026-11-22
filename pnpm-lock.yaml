@@ -23,6 +23,9 @@ importers:
       '@hexapotamaus/protocol':
         specifier: workspace:*
         version: link:../protocol
+      '@hexapotamaus/socketcan':
+        specifier: workspace:*
+        version: link:../socketcan
     devDependencies:
       '@hexapotamaus/sim':
         specifier: workspace:*
@@ -37,6 +40,9 @@ importers:
       '@hexapotamaus/sim':
         specifier: workspace:*
         version: link:../sim
+      '@hexapotamaus/socketcan':
+        specifier: workspace:*
+        version: link:../socketcan
 
   packages/dashboard: {}
 
@@ -45,6 +51,15 @@ importers:
   packages/protocol: {}
 
   packages/sim:
+    dependencies:
+      '@hexapotamaus/protocol':
+        specifier: workspace:*
+        version: link:../protocol
+      '@hexapotamaus/socketcan':
+        specifier: workspace:*
+        version: link:../socketcan
+
+  packages/socketcan:
     dependencies:
       '@hexapotamaus/protocol':
         specifier: workspace:*

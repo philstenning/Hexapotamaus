@@ -15,6 +15,7 @@
     "@hexapotamaus/protocol": "workspace:*"
   },
   "devDependencies": {
-    "@hexapotamaus/sim": "workspace:*"
+    "@hexapotamaus/sim": "workspace:*",
+    "@hexapotamaus/socketcan": "workspace:*"
   }
 }

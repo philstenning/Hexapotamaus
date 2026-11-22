@@ -33,6 +33,7 @@ A pnpm workspace on Node 24 LTS (see `.nvmrc`), TypeScript and Vitest.
 | `packages/brain` | The controller: frame transport, control loop, leg sessions, calibration, the viewer feed |
 | `packages/sim` | The simulated leg on a virtual CAN bus, with simulated switches and injected errors |
 | `packages/conformance` | The protocol conformance suite: drives a leg only through CAN frames, so the same tests run against the simulated leg and the real one |
+| `packages/socketcan` | The SocketCAN frame transport, for the brain and the simulated leg on `vcan0` or `can0`, through a small Python bridge ([ADR 0006](docs/adr/0006-socketcan-through-a-python-bridge.md)) |
 | `packages/dashboard` | Placeholder for the leg viewer: Vite, React, Tailwind and three.js (rebuilt in slice 04) |
 
 The brain and the leg controllers talk over CAN using the [leg CAN protocol](docs/protocol.md).
@@ -46,6 +47,8 @@ pnpm verify      # install, type-check every package, run every test
 pnpm test        # tests only (or `pnpm test --watch`)
 pnpm typecheck   # type-check only
 ```
+
+The tests that run the brain and the simulated leg as separate processes on a virtual CAN bus need `vcan0` and `python3`. Without `vcan0` they are skipped, with a message saying so. To set up `vcan0` on WSL, watch it with `candump`, and run the brain and the simulated leg by hand (`pnpm sim`, `pnpm brain`), see [docs/vcan.md](docs/vcan.md).
 
 ## Bus servo
 The servos used in this robot:
